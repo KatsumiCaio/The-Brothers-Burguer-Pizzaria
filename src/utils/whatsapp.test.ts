@@ -118,7 +118,12 @@ describe('whatsapp utils', () => {
     const mockOrderForm: OrderForm = {
       customerName: 'Juliana Mendes',
       customerPhone: '(15) 99765-4321',
-      orderType: 'retirada',
+      orderType: 'pickup',
+      address: {
+        street: 'Av. Brasil',
+        number: '100',
+        neighborhood: 'Centro',
+      },
       paymentMethod: 'cartao_entrega',
       needChange: false,
       changeFor: '',
