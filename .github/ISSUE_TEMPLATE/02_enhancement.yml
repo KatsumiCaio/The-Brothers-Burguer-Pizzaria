@@ -1,0 +1,20 @@
+name: ⚡ Melhoria (Enhancement)
+description: Propor uma melhoria em funcionalidade existente, design, UX ou performance.
+title: "[Melhoria]: "
+labels: ["enhancement", "melhoria"]
+body:
+  - type: textarea
+    id: enhancement-description
+    attributes:
+      label: O que pode ser melhorado?
+      description: Descreva a oportunidade de melhoria.
+      placeholder: Ex: Salvar o carrinho no LocalStorage para não perder dados ao recarregar a página...
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Solução Proposta
+      description: Como você imagina que essa melhoria deve funcionar.
+    validations:
+      required: true

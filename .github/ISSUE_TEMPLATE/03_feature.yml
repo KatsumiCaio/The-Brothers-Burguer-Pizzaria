@@ -1,0 +1,30 @@
+name: ✨ Nova Função (Feature)
+description: Sugerir ou especificar uma funcionalidade inédita para a aplicação.
+title: "[Nova Função]: "
+labels: ["feature", "nova-funcao"]
+body:
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Descrição da Nova Função
+      description: Explique o que a nova função fará e qual valor agrega aos clientes ou ao restaurante.
+      placeholder: Ex: Permitir montagem de pizza meio a meio (2 sabores)...
+    validations:
+      required: true
+  - type: textarea
+    id: user-story
+    attributes:
+      label: História de Usuário / Casos de Uso
+      placeholder: "Como cliente, quero escolher 2 sabores de pizza para que eu e minha família possamos compartilhar a mesma pizza."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Critérios de Aceitação
+      placeholder: |
+        - [ ] Campo no modal para escolher 2 sabores
+        - [ ] Cálculo pelo maior valor
+        - [ ] Formatação clara no texto do WhatsApp
+    validations:
+      required: true

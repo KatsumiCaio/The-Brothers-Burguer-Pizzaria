@@ -1,0 +1,35 @@
+name: 🐛 Correção (Bug Fix)
+description: Reportar um erro, cálculo incorreto ou falha de interface.
+title: "[Correção]: "
+labels: ["bug", "correcao"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por reportar esta correção para o **The Brothers Burguer & Pizzaria**!
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Descrição do Problema
+      description: Explique o que aconteceu de errado.
+      placeholder: Ex: Ao selecionar mais de 3 adicionais, o cálculo não somou o item X...
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Passos para Reproduzir
+      description: Passo a passo para observar o erro.
+      placeholder: |
+        1. Adicionar hambúrguer ao carrinho
+        2. Selecionar adicionais
+        3. Clicar em finalizar
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Comportamento Esperado
+      description: O que deveria ter acontecido.
+    validations:
+      required: true
