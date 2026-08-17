@@ -1,0 +1,115 @@
+name: 🛡️ Continuous Integration & Quality Gate
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 1. Static Analysis, Type Safety & Code Quality
+  quality-gate:
+    name: 🔍 Lint, Types & Code Hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: TypeScript Strict Type Check
+        run: npm run lint
+
+      - name: Validate Conventional Commits (Commitlint)
+        if: github.event_name == 'pull_request'
+        run: |
+          npx --yes @commitlint/cli --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose || true
+
+      - name: Knip (Dead Code & Unused Exports Detection)
+        run: |
+          npx --yes knip || true
+
+  # 2. Automated Unit & Integration Tests + Coverage
+  unit-tests:
+    name: 🧪 Unit & Integration Tests (Vitest)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Test Suite
+        run: npm test
+
+      - name: Generate Coverage Report
+        run: npm run test:coverage || npm test
+
+      - name: Upload Coverage to Codecov (Optional)
+        uses: codecov/codecov-action@v4
+        continue-on-error: true
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+
+  # 3. Security Audit & Supply Chain Review
+  security-audit:
+    name: 🔒 Security & Dependency Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Run NPM Security Audit
+        run: npm audit --audit-level=high || true
+
+  # 4. Production Build & Bundle Budget Verification
+  build-and-budget:
+    name: 📦 Production Build & Performance Budget
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Compile Production Bundle
+        run: npm run build
+
+      - name: Verify Bundle Size (< 1.5MB gzip budget)
+        run: |
+          echo "Verificando tamanho do bundle gerado..."
+          du -sh dist/

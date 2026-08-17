@@ -1,0 +1,7 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": ["src/main.tsx", "server.ts"],
+  "project": ["src/**/*.{ts,tsx}", "server.ts"],
+  "ignore": ["**/*.test.{ts,tsx}", "src/test/**"],
+  "ignoreDependencies": ["@tailwindcss/vite", "autoprefixer", "tsx", "@types/*"]
+}

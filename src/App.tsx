@@ -20,6 +20,9 @@ import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ReservationModal } from './components/ReservationModal';
 import { ToastContainer, ToastMessage } from './components/Toast';
+import { LegalModal } from './components/LegalModal';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { telemetry } from './utils/telemetry';
 
 export default function App() {
   // Navigation & Category state
@@ -33,6 +36,10 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState<MenuItem | null>(null);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isReservationOpen, setIsReservationOpen] = useState(false);
+  const [legalModalState, setLegalModalState] = useState<{ isOpen: boolean; tab: 'terms' | 'privacy' }>({
+    isOpen: false,
+    tab: 'terms',
+  });
 
   // Toast feedback state
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
@@ -180,99 +187,111 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0B0A] text-[#FDFBF7] flex flex-col font-sans-body antialiased">
-      
-      {/* 1. Top Announcement Header */}
-      <TopAnnouncementBar onOpenReservation={() => setIsReservationOpen(true)} />
+    <ErrorBoundary>
+      <div className="min-h-screen bg-[#0D0B0A] text-[#FDFBF7] flex flex-col font-sans-body antialiased">
+        
+        {/* 1. Top Announcement Header */}
+        <TopAnnouncementBar onOpenReservation={() => setIsReservationOpen(true)} />
 
-      {/* 2. Floating Navbar */}
-      <Navbar
-        cartCount={cartCount}
-        cartSubtotal={cartSubtotal}
-        onOpenCart={() => setIsCartOpen(true)}
-        onOpenReservation={() => setIsReservationOpen(true)}
-      />
-
-      {/* Main Content Sections */}
-      <main className="flex-1">
-        {/* 3. Hero Section */}
-        <Hero
-          onExploreMenu={scrollToMenu}
+        {/* 2. Floating Navbar */}
+        <Navbar
+          cartCount={cartCount}
+          cartSubtotal={cartSubtotal}
+          onOpenCart={() => setIsCartOpen(true)}
           onOpenReservation={() => setIsReservationOpen(true)}
         />
 
-        {/* 4. 4 Pillars / Badges of the House */}
-        <PillarsSection
-          onSelectCategory={(cat) => setActiveCategory(cat as MenuCategory)}
-          onOpenReservation={() => setIsReservationOpen(true)}
-        />
-
-        {/* 5. Interactive Menu & Order Builder */}
-        <InteractiveMenu
-          activeCategory={activeCategory}
-          onSelectCategory={(cat) => setActiveCategory(cat)}
-          onOpenProductModal={handleOpenProductModal}
-          onDirectAdd={handleDirectAdd}
-          cartItemIds={cartItemIds}
-        />
-
-        {/* 6. Friday Rodizio Special Section */}
-        <FridayRodizioSection onOpenReservation={() => setIsReservationOpen(true)} />
-
-        {/* 7. Real Testimonials Google 4.8★ */}
-        <TestimonialsSection />
-
-        {/* 8. Location & Opening Hours */}
-        <LocationHoursSection />
-      </main>
-
-      {/* 9. Footer */}
-      <Footer />
-
-      {/* Floating WhatsApp Action Button */}
-      <FloatingWhatsApp />
-
-      {/* Toast Notification Stack */}
-      <ToastContainer toasts={toasts} onDismiss={dismissToast} />
-
-      {/* Modals & Drawers */}
-      <AnimatePresence>
-        {isProductModalOpen && (
-          <ProductModal
-            item={selectedProduct}
-            isOpen={isProductModalOpen}
-            onClose={() => {
-              setIsProductModalOpen(false);
-              setSelectedProduct(null);
-            }}
-            onAddToCart={handleAddToCart}
+        {/* Main Content Sections */}
+        <main className="flex-1">
+          {/* 3. Hero Section */}
+          <Hero
+            onExploreMenu={scrollToMenu}
+            onOpenReservation={() => setIsReservationOpen(true)}
           />
-        )}
-      </AnimatePresence>
 
-      <AnimatePresence>
-        {isCartOpen && (
-          <CartDrawer
-            isOpen={isCartOpen}
-            onClose={() => setIsCartOpen(false)}
-            cartItems={cartItems}
-            onUpdateQuantity={handleUpdateQuantity}
-            onRemoveItem={handleRemoveItem}
-            onClearCart={handleClearCart}
+          {/* 4. 4 Pillars / Badges of the House */}
+          <PillarsSection
+            onSelectCategory={(cat) => setActiveCategory(cat as MenuCategory)}
+            onOpenReservation={() => setIsReservationOpen(true)}
           />
-        )}
-      </AnimatePresence>
 
-      <AnimatePresence>
-        {isReservationOpen && (
-          <ReservationModal
-            isOpen={isReservationOpen}
-            onClose={() => setIsReservationOpen(false)}
+          {/* 5. Interactive Menu & Order Builder */}
+          <InteractiveMenu
+            activeCategory={activeCategory}
+            onSelectCategory={(cat) => setActiveCategory(cat)}
+            onOpenProductModal={handleOpenProductModal}
+            onDirectAdd={handleDirectAdd}
+            cartItemIds={cartItemIds}
           />
-        )}
-      </AnimatePresence>
 
-    </div>
+          {/* 6. Friday Rodizio Special Section */}
+          <FridayRodizioSection onOpenReservation={() => setIsReservationOpen(true)} />
+
+          {/* 7. Real Testimonials Google 4.8★ */}
+          <TestimonialsSection />
+
+          {/* 8. Location & Opening Hours */}
+          <LocationHoursSection />
+        </main>
+
+        {/* 9. Footer */}
+        <Footer onOpenLegal={(tab) => setLegalModalState({ isOpen: true, tab })} />
+
+        {/* Floating WhatsApp Action Button */}
+        <FloatingWhatsApp />
+
+        {/* Toast Notification Stack */}
+        <ToastContainer toasts={toasts} onDismiss={dismissToast} />
+
+        {/* Modals & Drawers */}
+        <AnimatePresence>
+          {isProductModalOpen && (
+            <ProductModal
+              item={selectedProduct}
+              isOpen={isProductModalOpen}
+              onClose={() => {
+                setIsProductModalOpen(false);
+                setSelectedProduct(null);
+              }}
+              onAddToCart={handleAddToCart}
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {isCartOpen && (
+            <CartDrawer
+              isOpen={isCartOpen}
+              onClose={() => setIsCartOpen(false)}
+              cartItems={cartItems}
+              onUpdateQuantity={handleUpdateQuantity}
+              onRemoveItem={handleRemoveItem}
+              onClearCart={handleClearCart}
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {isReservationOpen && (
+            <ReservationModal
+              isOpen={isReservationOpen}
+              onClose={() => setIsReservationOpen(false)}
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {legalModalState.isOpen && (
+            <LegalModal
+              isOpen={legalModalState.isOpen}
+              defaultTab={legalModalState.tab}
+              onClose={() => setLegalModalState((prev) => ({ ...prev, isOpen: false }))}
+            />
+          )}
+        </AnimatePresence>
+
+      </div>
+    </ErrorBoundary>
   );
 }
 

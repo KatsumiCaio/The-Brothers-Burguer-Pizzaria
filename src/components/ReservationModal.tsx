@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Calendar, Users, Clock, Flame, ArrowRight, Loader2, CheckCircle2 } from 'lucide-react';
 import { generateWhatsAppReservationUrl } from '../utils/whatsapp';
+import { sanitizeInput, reservationRateLimiter } from '../utils/security';
+import { telemetry } from '../utils/telemetry';
 
 interface ReservationModalProps {
   isOpen: boolean;
@@ -17,16 +19,33 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onCl
   const [date, setDate] = useState('Próxima Sexta-feira');
   const [time, setTime] = useState('19:00');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isSubmitting) return;
+
+    if (!reservationRateLimiter.canExecute()) {
+      const waitSeconds = reservationRateLimiter.getTimeUntilNextAllowed();
+      setErrorMessage(`Aguarde ${waitSeconds}s antes de enviar nova solicitação.`);
+      return;
+    }
+
+    const sanitizedName = sanitizeInput(name, 80);
+    setErrorMessage(null);
     setIsSubmitting(true);
+
+    telemetry.trackEvent('reservation_requested', 'reservation', {
+      type: reservationType,
+      peopleCount,
+      date,
+      time,
+    });
 
     setTimeout(() => {
       setIsSubmitting(false);
       const waUrl = generateWhatsAppReservationUrl(
-        name.trim() || 'Cliente',
+        sanitizedName || 'Cliente',
         peopleCount,
         date,
         time,
@@ -181,6 +200,12 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onCl
               className="w-full bg-[#0D0B0A] border border-white/10 focus:border-[#D97706] rounded-xl px-3 py-2 text-xs text-[#FDFBF7] focus:outline-none"
             />
           </div>
+
+          {errorMessage && (
+            <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-xs text-red-300">
+              {errorMessage}
+            </div>
+          )}
 
           {/* Submit */}
           <motion.button

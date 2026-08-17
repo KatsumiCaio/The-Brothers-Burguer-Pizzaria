@@ -3,7 +3,11 @@ import { BrandLogo } from './BrandLogo';
 import { RESTAURANT_INFO } from '../data/menuData';
 import { MapPin, Phone, Instagram, Heart, ArrowUp } from 'lucide-react';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenLegal?: (tab: 'terms' | 'privacy') => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenLegal }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -110,9 +114,28 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#A8A29E] text-[11px]">
-          <p>
-            © {new Date().getFullYear()} {RESTAURANT_INFO.name}. Todos os direitos reservados.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
+            <p>
+              © {new Date().getFullYear()} {RESTAURANT_INFO.name}. Todos os direitos reservados.
+            </p>
+            <div className="flex items-center gap-3 text-[11px] text-[#A8A29E]">
+              <button
+                type="button"
+                onClick={() => onOpenLegal?.('terms')}
+                className="hover:text-[#EAB308] underline transition-colors cursor-pointer"
+              >
+                Termos de Uso
+              </button>
+              <span>•</span>
+              <button
+                type="button"
+                onClick={() => onOpenLegal?.('privacy')}
+                className="hover:text-[#25D366] underline transition-colors cursor-pointer"
+              >
+                Privacidade & LGPD
+              </button>
+            </div>
+          </div>
 
           <button
             onClick={scrollToTop}

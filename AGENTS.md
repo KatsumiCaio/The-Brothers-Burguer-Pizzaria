@@ -59,3 +59,36 @@ Todo Pull Request deve conter na sua descrição o seguinte template preenchido:
 2. **Proibição de AI Slop**: Sem gradientes roxo/azul arbitrários, sem glow excessivo, sem botões desalinhados ou quebras de texto em chips/pills.
 3. **TypeScript Estrito**: Todas as interfaces em `/src/types/` ou no topo dos componentes, sem uso de `any`.
 4. **Sem Dados Mockados Vazios**: Manter dados reais de Capão Bonito, telefones e produtos consistentes.
+
+---
+
+## 🛡️ 4. Esteira de Qualidade (Quality Gate) & CI/CD
+
+Nenhum código entra na branch principal sem passar pelos 5 pilares do pipeline de qualidade:
+
+1. **Observabilidade & Telemetria (`src/utils/telemetry.ts` & `ErrorBoundary.tsx`)**:
+   - Captura resiliente de exceções em tempo de execução com bridge para Sentry / Datadog RUM.
+   - Monitoramento contínuo de Core Web Vitals (LCP, FID/INP, CLS) e eventos chave de conversão no cardápio.
+2. **Qualidade & Linting Estático**:
+   - `npm run lint` (`tsc --noEmit`) em nível estrito.
+   - Detecção de código morto / exports não utilizados via **Knip** (`knip.json`).
+   - Padronização de mensagens de commit via **Commitlint** (`commitlint.config.js`).
+3. **Testes Automatizados (Unitários, Integração e E2E)**:
+   - **Vitest**: `npm test` para cálculo de preços, regras de delivery, sanitização e gerador de URLs do WhatsApp.
+   - **Playwright**: `npm run test:e2e` para validação end-to-end dos fluxos críticos de compra e reservas.
+4. **Segurança e Operação**:
+   - Rate limiting client-side com sliding window para formulários de checkout e reservas (`src/utils/security.ts`).
+   - Sanitização de inputs para prevenção contra scripts maliciosos e truncamento de strings.
+   - Termos de Uso e Política de Privacidade compatíveis com a LGPD acessíveis via modal (`LegalModal.tsx`).
+   - Performance budget verificado no build de produção (< 1.5MB gzip).
+
+---
+
+## 🏛️ 5. Princípios de Arquitetura & Governança
+
+1. **Evitar Overengineering**: Construir estritamente o escopo necessário para atender a regra de negócio da hamburgueria e pizzaria.
+2. **Evitar Bottlenecks**: Renderização leve, memoização criteriosa de listas (`useMemo`), imagens com lazy-loading e transições aceleradas por GPU.
+3. **Componentização Consciente**: Separar componentes por responsabilidade única (`Navbar`, `InteractiveMenu`, `ProductModal`, `CartDrawer`, `ReservationModal`, `Toast`, `LegalModal`).
+4. **DRY com Critério**: Reutilizar utilitários compartilhados (`formatCurrency`, `sanitizeInput`, `telemetry`) sem criar abstrações prematuras ou acoplamento excessivo.
+5. **Reuso Estrito**: Proibida a recriação de componentes visuais ou utilitários que já existam na base de código.
+

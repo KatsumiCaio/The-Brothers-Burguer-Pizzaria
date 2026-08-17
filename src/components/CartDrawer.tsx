@@ -20,6 +20,8 @@ import {
 import { CartItem, OrderForm, OrderType, PaymentMethod } from '../types';
 import { RESTAURANT_INFO, NEIGHBORHOODS_CAPAO_BONITO } from '../data/menuData';
 import { formatCurrency, generateWhatsAppOrderUrl } from '../utils/whatsapp';
+import { sanitizeInput, orderRateLimiter } from '../utils/security';
+import { telemetry } from '../utils/telemetry';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -76,17 +78,30 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const validateAndSubmit = () => {
     if (isSubmitting) return;
 
-    const errors: string[] = [];
+    if (!orderRateLimiter.canExecute()) {
+      const waitSeconds = orderRateLimiter.getTimeUntilNextAllowed();
+      setFormErrors([`Por favor, aguarde ${waitSeconds}s antes de reenviar o pedido.`]);
+      return;
+    }
 
-    if (!orderForm.customerName.trim()) {
+    const errors: string[] = [];
+    const sanitizedName = sanitizeInput(orderForm.customerName, 80);
+    const sanitizedPhone = sanitizeInput(orderForm.customerPhone, 30);
+    const sanitizedStreet = sanitizeInput(orderForm.address.street, 120);
+    const sanitizedNumber = sanitizeInput(orderForm.address.number, 20);
+    const sanitizedComplement = sanitizeInput(orderForm.address.complement || '', 100);
+    const sanitizedRef = sanitizeInput(orderForm.address.reference || '', 120);
+    const sanitizedNotes = sanitizeInput(orderForm.generalNotes || '', 300);
+
+    if (!sanitizedName) {
       errors.push('Por favor, informe seu nome.');
     }
 
     if (orderForm.orderType === 'delivery') {
-      if (!orderForm.address.street.trim()) {
+      if (!sanitizedStreet) {
         errors.push('Informe a rua para entrega em Capão Bonito.');
       }
-      if (!orderForm.address.number.trim()) {
+      if (!sanitizedNumber) {
         errors.push('Informe o número da residência.');
       }
     }
@@ -96,13 +111,35 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       return;
     }
 
+    const sanitizedForm: OrderForm = {
+      ...orderForm,
+      customerName: sanitizedName,
+      customerPhone: sanitizedPhone,
+      address: {
+        ...orderForm.address,
+        street: sanitizedStreet,
+        number: sanitizedNumber,
+        complement: sanitizedComplement,
+        reference: sanitizedRef,
+      },
+      generalNotes: sanitizedNotes,
+    };
+
     setFormErrors([]);
     setIsSubmitting(true);
+
+    telemetry.trackEvent('order_whatsapp_submitted', 'checkout', {
+      orderType: sanitizedForm.orderType,
+      itemCount: cartItems.length,
+      subtotal,
+      total,
+      paymentMethod: sanitizedForm.paymentMethod,
+    });
 
     // Simulate smooth progress before dispatching to WhatsApp
     setTimeout(() => {
       setIsSubmitting(false);
-      const waUrl = generateWhatsAppOrderUrl(cartItems, orderForm, subtotal, deliveryFee, total);
+      const waUrl = generateWhatsAppOrderUrl(cartItems, sanitizedForm, subtotal, deliveryFee, total);
       window.open(waUrl, '_blank', 'noopener,noreferrer');
       onClose();
     }, 450);

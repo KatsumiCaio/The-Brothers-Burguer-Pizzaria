@@ -55,7 +55,7 @@ const cardItemVariants = {
     y: 0, 
     scale: 1,
     transition: {
-      type: 'spring',
+      type: 'spring' as const,
       stiffness: 360,
       damping: 26,
     }
