@@ -26,6 +26,47 @@ interface InteractiveMenuProps {
   cartItemIds: Set<string>;
 }
 
+// Staggered Container & Item Animation Variants for Motion
+const gridContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+      delayChildren: 0.02,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.15,
+    },
+  },
+};
+
+const cardItemVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 20, 
+    scale: 0.97 
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    transition: {
+      type: 'spring',
+      stiffness: 360,
+      damping: 26,
+    }
+  },
+  exit: { 
+    opacity: 0, 
+    scale: 0.95, 
+    transition: { duration: 0.15 } 
+  },
+};
+
 // Progressive Image Loader with Skeleton Shimmer
 const MenuItemImage: React.FC<{ src: string; alt: string }> = ({ src, alt }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -75,17 +116,12 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
   cartItemIds,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [isCategoryLoading, setIsCategoryLoading] = useState(false);
   const [recentlyAddedId, setRecentlyAddedId] = useState<string | null>(null);
 
-  // Smooth category transition simulation with brief skeleton state
+  // Instant category switch allowing staggered entrance animation to play immediately
   const handleCategorySwitch = (cat: MenuCategory) => {
     if (cat === activeCategory) return;
-    setIsCategoryLoading(true);
     onSelectCategory(cat);
-    setTimeout(() => {
-      setIsCategoryLoading(false);
-    }, 180);
   };
 
   const handleAddWithFeedback = (item: MenuItem) => {
@@ -239,40 +275,29 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
           )}
         </AnimatePresence>
 
-        {/* Products Grid with Skeleton Loading State and Staggered Transitions */}
-        {isCategoryLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((n) => (
-              <MenuCardSkeleton key={n} />
-            ))}
-          </div>
-        ) : (
+        {/* Products Grid with Staggered Entrance Motion Transitions */}
+        <AnimatePresence mode="wait">
           <motion.div 
-            layout
+            key={activeCategory + (searchQuery ? `-${searchQuery}` : '')}
+            variants={gridContainerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            <AnimatePresence mode="popLayout">
-              {filteredItems.map((item, idx) => {
-                const hasAdded = cartItemIds.has(item.id);
-                const isJustAdded = recentlyAddedId === item.id;
-                const needsCustomization = item.allowsBreadChoice || item.allowsMeatDoneness || item.allowsCrustChoice || (item.availableExtras && item.availableExtras.length > 0);
+            {filteredItems.map((item) => {
+              const hasAdded = cartItemIds.has(item.id);
+              const isJustAdded = recentlyAddedId === item.id;
+              const needsCustomization = item.allowsBreadChoice || item.allowsMeatDoneness || item.allowsCrustChoice || (item.availableExtras && item.availableExtras.length > 0);
 
-                return (
-                  <motion.div
-                    key={item.id}
-                    id={`card-${item.id}`}
-                    layout
-                    initial={{ opacity: 0, y: 16, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
-                    transition={{ 
-                      duration: 0.35, 
-                      delay: Math.min(idx * 0.04, 0.24),
-                      ease: [0.16, 1, 0.3, 1] 
-                    }}
-                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                    className="bg-[#1A1614] hover:bg-[#221C18] border border-white/10 hover:border-[#D97706]/40 rounded-2xl overflow-hidden transition-colors duration-300 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-black/80 group"
-                  >
+              return (
+                <motion.div
+                  key={item.id}
+                  id={`card-${item.id}`}
+                  variants={cardItemVariants}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  className="bg-[#1A1614] hover:bg-[#221C18] border border-white/10 hover:border-[#D97706]/40 rounded-2xl overflow-hidden transition-colors duration-300 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-black/80 group"
+                >
                     
                     {/* Top Image Container */}
                     <div 
@@ -397,12 +422,11 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                   </motion.div>
                 );
               })}
-            </AnimatePresence>
-          </motion.div>
-        )}
+            </motion.div>
+          </AnimatePresence>
 
         {/* Empty state with Animation */}
-        {!isCategoryLoading && filteredItems.length === 0 && (
+        {filteredItems.length === 0 && (
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
