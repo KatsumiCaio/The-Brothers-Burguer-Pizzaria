@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, 
   Trash2, 
@@ -12,7 +13,9 @@ import {
   Phone, 
   ArrowRight,
   Sparkles,
-  AlertCircle
+  AlertCircle,
+  Loader2,
+  CheckCircle2
 } from 'lucide-react';
 import { CartItem, OrderForm, OrderType, PaymentMethod } from '../types';
 import { RESTAURANT_INFO, NEIGHBORHOODS_CAPAO_BONITO } from '../data/menuData';
@@ -55,6 +58,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   });
 
   const [formErrors, setFormErrors] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Subtotal Calculation
   const subtotal = cartItems.reduce((acc, item) => acc + item.totalPrice, 0);
@@ -70,6 +74,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   };
 
   const validateAndSubmit = () => {
+    if (isSubmitting) return;
+
     const errors: string[] = [];
 
     if (!orderForm.customerName.trim()) {
@@ -91,28 +97,44 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     }
 
     setFormErrors([]);
+    setIsSubmitting(true);
 
-    // Generate WhatsApp Link
-    const waUrl = generateWhatsAppOrderUrl(cartItems, orderForm, subtotal, deliveryFee, total);
-    
-    // Open WhatsApp in new tab
-    window.open(waUrl, '_blank', 'noopener,noreferrer');
+    // Simulate smooth progress before dispatching to WhatsApp
+    setTimeout(() => {
+      setIsSubmitting(false);
+      const waUrl = generateWhatsAppOrderUrl(cartItems, orderForm, subtotal, deliveryFee, total);
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+      onClose();
+    }, 450);
   };
 
   return (
     <div 
       id="cart-drawer-overlay"
-      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex justify-end animate-fadeIn"
-      onClick={onClose}
+      className="fixed inset-0 z-50 flex justify-end overflow-hidden"
     >
-      <div 
+      {/* Backdrop */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="fixed inset-0 bg-black/80 backdrop-blur-md"
+      />
+
+      {/* Slide-out Drawer */}
+      <motion.div 
         id="cart-drawer-content"
-        className="w-full max-w-xl bg-[#1A1614] text-[#FDFBF7] h-full flex flex-col shadow-2xl border-l border-white/10 overflow-hidden"
+        initial={{ x: '100%' }}
+        animate={{ x: '0%' }}
+        exit={{ x: '100%' }}
+        transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+        className="w-full max-w-xl bg-[#1A1614] text-[#FDFBF7] h-full flex flex-col shadow-2xl border-l border-white/10 relative z-10 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Drawer Header */}
-        <div className="p-4 sm:p-5 bg-[#0D0B0A] border-b border-white/10 flex items-center justify-between">
+        <div className="p-4 sm:p-5 bg-[#0D0B0A] border-b border-white/10 flex items-center justify-between flex-shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-[#221C18] border border-white/10 flex items-center justify-center text-[#D97706]">
               <ShoppingBag className="w-5 h-5" />
@@ -129,26 +151,34 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
           <div className="flex items-center gap-2">
             {cartItems.length > 0 && (
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={onClearCart}
-                className="text-[11px] text-[#A8A29E] hover:text-red-400 px-2.5 py-1 rounded-md bg-[#221C18] border border-white/10 transition-colors uppercase tracking-wider font-bold"
+                className="text-[11px] text-[#A8A29E] hover:text-red-400 px-2.5 py-1 rounded-md bg-[#221C18] border border-white/10 transition-colors uppercase tracking-wider font-bold cursor-pointer"
               >
                 Limpar
-              </button>
+              </motion.button>
             )}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               onClick={onClose}
               className="w-8 h-8 rounded-full bg-[#221C18] hover:bg-[#1A1614] text-[#FDFBF7] flex items-center justify-center border border-white/10 transition-colors cursor-pointer"
               aria-label="Fechar carrinho"
             >
               <X className="w-4 h-4" />
-            </button>
+            </motion.button>
           </div>
         </div>
 
         {/* Drawer Body (Scrollable) */}
         {cartItems.length === 0 ? (
-          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-4">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-4"
+          >
             <div className="w-20 h-20 rounded-full bg-[#221C18] border border-white/10 flex items-center justify-center text-3xl">
               🍔
             </div>
@@ -158,17 +188,19 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             <p className="text-xs text-[#A8A29E] max-w-xs leading-relaxed font-sans-body">
               Explore nosso cardápio de hambúrgueres artesanais, pizzas forneadas, porções e chopp trincando para montar seu pedido.
             </p>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={onClose}
               className="bg-[#D97706] hover:bg-[#E65100] text-black font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-full shadow-lg transition-all cursor-pointer"
             >
               Ver Cardápio Agora
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         ) : (
-          <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-6 text-xs sm:text-sm">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-6 text-xs sm:text-sm custom-scrollbar">
             
-            {/* Items List */}
+            {/* Items List with Layout Animations */}
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#EAB308] flex items-center justify-between">
                 <span>Itens Selecionados</span>
@@ -176,88 +208,98 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </h4>
 
               <div className="space-y-3">
-                {cartItems.map((item) => (
-                  <div
-                    key={item.cartItemId}
-                    className="bg-[#221C18] border border-white/5 rounded-2xl p-3.5 space-y-2.5 transition-all shadow-md"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex gap-3">
-                        <img
-                          src={item.menuItem.image}
-                          alt={item.menuItem.name}
-                          className="w-14 h-14 rounded-xl object-cover border border-white/10 flex-shrink-0"
-                        />
-                        <div>
-                          <h5 className="font-serif-display font-bold text-[#FDFBF7] text-xs sm:text-sm leading-snug">
-                            {item.menuItem.name}
-                          </h5>
-                          <p className="text-[#EAB308] font-bold text-xs mt-0.5">
-                            {formatCurrency(item.totalPrice)}
-                          </p>
+                <AnimatePresence mode="popLayout">
+                  {cartItems.map((item) => (
+                    <motion.div
+                      key={item.cartItemId}
+                      layout
+                      initial={{ opacity: 0, y: 15, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9, height: 0, overflow: 'hidden', marginBottom: 0, transition: { duration: 0.2 } }}
+                      className="bg-[#221C18] border border-white/5 rounded-2xl p-3.5 space-y-2.5 transition-all shadow-md"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex gap-3">
+                          <img
+                            src={item.menuItem.image}
+                            alt={item.menuItem.name}
+                            className="w-14 h-14 rounded-xl object-cover border border-white/10 flex-shrink-0"
+                          />
+                          <div>
+                            <h5 className="font-serif-display font-bold text-[#FDFBF7] text-xs sm:text-sm leading-snug">
+                              {item.menuItem.name}
+                            </h5>
+                            <p className="text-[#EAB308] font-bold text-xs mt-0.5">
+                              {formatCurrency(item.totalPrice)}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Remove Button */}
+                        <motion.button
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          onClick={() => onRemoveItem(item.cartItemId)}
+                          className="text-[#A8A29E] hover:text-red-400 p-1.5 rounded-lg bg-[#1A1614] border border-white/5 transition-colors cursor-pointer"
+                          aria-label="Remover item"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </motion.button>
+                      </div>
+
+                      {/* Customizations summary tags */}
+                      {(item.options.breadType || item.options.meatDoneness || (item.options.pizzaCrust && item.options.pizzaCrust !== 'Borda Tradicional') || item.options.selectedExtras.length > 0 || item.options.notes) && (
+                        <div className="bg-[#1A1614] p-2.5 rounded-xl border border-white/5 space-y-1 text-[11px] text-[#A8A29E]">
+                          {item.options.breadType && (
+                            <p>🥖 <strong className="text-[#FDFBF7]">Pão:</strong> {item.options.breadType}</p>
+                          )}
+                          {item.options.meatDoneness && (
+                            <p>🥩 <strong className="text-[#FDFBF7]">Ponto:</strong> {item.options.meatDoneness}</p>
+                          )}
+                          {item.options.pizzaCrust && item.options.pizzaCrust !== 'Borda Tradicional' && (
+                            <p>🍕 <strong className="text-[#FDFBF7]">Borda:</strong> {item.options.pizzaCrust}</p>
+                          )}
+                          {item.options.selectedExtras.length > 0 && (
+                            <p>
+                              ➕ <strong className="text-[#FDFBF7]">Adicionais:</strong>{' '}
+                              {item.options.selectedExtras.map((e) => `${e.name} (+${formatCurrency(e.price)})`).join(', ')}
+                            </p>
+                          )}
+                          {item.options.notes && (
+                            <p className="text-[#EAB308] italic">
+                              📝 <strong className="text-[#FDFBF7]">Obs:</strong> "{item.options.notes}"
+                            </p>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Quantity Controls */}
+                      <div className="flex items-center justify-between pt-1 border-t border-white/5">
+                        <span className="text-[11px] text-[#A8A29E]">Quantidade:</span>
+                        <div className="flex items-center gap-2 bg-[#1A1614] border border-white/10 rounded-lg p-0.5">
+                          <motion.button
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => onUpdateQuantity(item.cartItemId, item.quantity - 1)}
+                            className="w-6 h-6 rounded bg-[#221C18] hover:bg-[#2c241f] text-[#FDFBF7] flex items-center justify-center transition-colors cursor-pointer"
+                          >
+                            <Minus className="w-3 h-3" />
+                          </motion.button>
+                          <span className="w-6 text-center font-bold text-xs text-[#FDFBF7]">
+                            {item.quantity}
+                          </span>
+                          <motion.button
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => onUpdateQuantity(item.cartItemId, item.quantity + 1)}
+                            className="w-6 h-6 rounded bg-[#D97706] hover:bg-[#E65100] text-black flex items-center justify-center transition-colors font-bold cursor-pointer"
+                          >
+                            <Plus className="w-3 h-3 stroke-[3]" />
+                          </motion.button>
                         </div>
                       </div>
 
-                      {/* Remove Button */}
-                      <button
-                        onClick={() => onRemoveItem(item.cartItemId)}
-                        className="text-[#A8A29E] hover:text-red-400 p-1.5 rounded-lg bg-[#1A1614] border border-white/5 transition-colors"
-                        aria-label="Remover item"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-
-                    {/* Customizations summary tags */}
-                    {(item.options.breadType || item.options.meatDoneness || (item.options.pizzaCrust && item.options.pizzaCrust !== 'Borda Tradicional') || item.options.selectedExtras.length > 0 || item.options.notes) && (
-                      <div className="bg-[#1A1614] p-2.5 rounded-xl border border-white/5 space-y-1 text-[11px] text-[#A8A29E]">
-                        {item.options.breadType && (
-                          <p>🥖 <strong className="text-[#FDFBF7]">Pão:</strong> {item.options.breadType}</p>
-                        )}
-                        {item.options.meatDoneness && (
-                          <p>🥩 <strong className="text-[#FDFBF7]">Ponto:</strong> {item.options.meatDoneness}</p>
-                        )}
-                        {item.options.pizzaCrust && item.options.pizzaCrust !== 'Borda Tradicional' && (
-                          <p>🍕 <strong className="text-[#FDFBF7]">Borda:</strong> {item.options.pizzaCrust}</p>
-                        )}
-                        {item.options.selectedExtras.length > 0 && (
-                          <p>
-                            ➕ <strong className="text-[#FDFBF7]">Adicionais:</strong>{' '}
-                            {item.options.selectedExtras.map((e) => `${e.name} (+${formatCurrency(e.price)})`).join(', ')}
-                          </p>
-                        )}
-                        {item.options.notes && (
-                          <p className="text-[#EAB308] italic">
-                            📝 <strong className="text-[#FDFBF7]">Obs:</strong> "{item.options.notes}"
-                          </p>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Quantity Controls */}
-                    <div className="flex items-center justify-between pt-1 border-t border-white/5">
-                      <span className="text-[11px] text-[#A8A29E]">Quantidade:</span>
-                      <div className="flex items-center gap-2 bg-[#1A1614] border border-white/10 rounded-lg p-0.5">
-                        <button
-                          onClick={() => onUpdateQuantity(item.cartItemId, item.quantity - 1)}
-                          className="w-6 h-6 rounded bg-[#221C18] hover:bg-[#2c241f] text-[#FDFBF7] flex items-center justify-center transition-colors"
-                        >
-                          <Minus className="w-3 h-3" />
-                        </button>
-                        <span className="w-6 text-center font-bold text-xs text-[#FDFBF7]">
-                          {item.quantity}
-                        </span>
-                        <button
-                          onClick={() => onUpdateQuantity(item.cartItemId, item.quantity + 1)}
-                          className="w-6 h-6 rounded bg-[#D97706] hover:bg-[#E65100] text-black flex items-center justify-center transition-colors font-bold"
-                        >
-                          <Plus className="w-3 h-3 stroke-[3]" />
-                        </button>
-                      </div>
-                    </div>
-
-                  </div>
-                ))}
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               </div>
             </div>
 
@@ -268,8 +310,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </label>
 
               <div className="grid grid-cols-2 gap-2.5">
-                <button
+                <motion.button
                   type="button"
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => handleOrderTypeChange('delivery')}
                   className={`p-3 rounded-xl border flex flex-col items-center justify-center text-center gap-1 transition-all cursor-pointer ${
                     orderForm.orderType === 'delivery'
@@ -280,10 +323,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   <span className="text-lg">🛵</span>
                   <span className="text-xs">Entrega (Delivery)</span>
                   <span className="text-[10px] text-[#EAB308] font-semibold">+ {formatCurrency(RESTAURANT_INFO.deliveryFee)}</span>
-                </button>
+                </motion.button>
 
-                <button
+                <motion.button
                   type="button"
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => handleOrderTypeChange('pickup')}
                   className={`p-3 rounded-xl border flex flex-col items-center justify-center text-center gap-1 transition-all cursor-pointer ${
                     orderForm.orderType === 'pickup'
@@ -294,7 +338,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   <span className="text-lg">🛍️</span>
                   <span className="text-xs">Retirada no Balcão</span>
                   <span className="text-[10px] text-[#25D366] font-semibold">Grátis</span>
-                </button>
+                </motion.button>
               </div>
             </div>
 
@@ -427,8 +471,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </h4>
 
               <div className="grid grid-cols-3 gap-2">
-                <button
+                <motion.button
                   type="button"
+                  whileTap={{ scale: 0.96 }}
                   onClick={() => handlePaymentChange('pix')}
                   className={`p-2.5 rounded-xl border flex flex-col items-center gap-1 transition-all cursor-pointer ${
                     orderForm.paymentMethod === 'pix'
@@ -438,10 +483,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 >
                   <QrCode className="w-4 h-4 text-[#25D366]" />
                   <span className="text-xs">PIX</span>
-                </button>
+                </motion.button>
 
-                <button
+                <motion.button
                   type="button"
+                  whileTap={{ scale: 0.96 }}
                   onClick={() => handlePaymentChange('cartao_entrega')}
                   className={`p-2.5 rounded-xl border flex flex-col items-center gap-1 transition-all cursor-pointer ${
                     orderForm.paymentMethod === 'cartao_entrega'
@@ -451,10 +497,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 >
                   <CreditCard className="w-4 h-4 text-[#D97706]" />
                   <span className="text-xs">Cartão</span>
-                </button>
+                </motion.button>
 
-                <button
+                <motion.button
                   type="button"
+                  whileTap={{ scale: 0.96 }}
                   onClick={() => handlePaymentChange('dinheiro')}
                   className={`p-2.5 rounded-xl border flex flex-col items-center gap-1 transition-all cursor-pointer ${
                     orderForm.paymentMethod === 'dinheiro'
@@ -464,7 +511,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 >
                   <Banknote className="w-4 h-4 text-[#D97706]" />
                   <span className="text-xs">Dinheiro</span>
-                </button>
+                </motion.button>
               </div>
 
               {/* Cash change field */}
@@ -511,7 +558,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
             {/* Validation Errors alert */}
             {formErrors.length > 0 && (
-              <div className="bg-red-950/60 border border-red-500/50 rounded-xl p-3 space-y-1 text-red-200 text-xs">
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-red-950/60 border border-red-500/50 rounded-xl p-3 space-y-1 text-red-200 text-xs"
+              >
                 <div className="flex items-center gap-1.5 font-bold text-red-400">
                   <AlertCircle className="w-4 h-4" />
                   <span>Por favor, complete as informações:</span>
@@ -519,7 +570,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 {formErrors.map((err, i) => (
                   <p key={i} className="pl-5">• {err}</p>
                 ))}
-              </div>
+              </motion.div>
             )}
 
           </div>
@@ -527,7 +578,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
         {/* Drawer Footer (Summary + Direct WhatsApp Button) */}
         {cartItems.length > 0 && (
-          <div className="p-4 sm:p-5 bg-[#0D0B0A] border-t border-white/10 space-y-3">
+          <div className="p-4 sm:p-5 bg-[#0D0B0A] border-t border-white/10 space-y-3 flex-shrink-0">
             
             {/* Calculation details */}
             <div className="space-y-1.5 text-xs">
@@ -548,15 +599,27 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             </div>
 
             {/* Main WhatsApp Button */}
-            <button
+            <motion.button
               id="btn-submit-whatsapp-order"
+              whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+              whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+              disabled={isSubmitting}
               onClick={validateAndSubmit}
-              className="w-full inline-flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#1EBE5D] text-black font-bold text-xs uppercase tracking-widest py-4 px-4 rounded-xl shadow-xl active:scale-98 transition-all cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#1EBE5D] text-black font-bold text-xs uppercase tracking-widest py-4 px-4 rounded-xl shadow-xl transition-all cursor-pointer"
             >
-              <span className="text-lg">💬</span>
-              <span>Finalizar no WhatsApp (15) 99705-7138</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin text-black" />
+                  <span>Preparando mensagem para o WhatsApp...</span>
+                </>
+              ) : (
+                <>
+                  <span className="text-lg">💬</span>
+                  <span>Finalizar no WhatsApp (15) 99705-7138</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </motion.button>
 
             <p className="text-[10px] text-center text-[#A8A29E]">
               Ao clicar, uma mensagem formatada com todos os itens será aberta no seu WhatsApp oficial.
@@ -564,7 +627,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
           </div>
         )}
 
-      </div>
+      </motion.div>
     </div>
   );
 };
+

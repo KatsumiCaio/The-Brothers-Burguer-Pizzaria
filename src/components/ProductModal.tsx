@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, Plus, Minus, Check, ShoppingBag, Sparkles, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { X, Plus, Minus, Check, ShoppingBag, Sparkles, AlertCircle, Loader2 } from 'lucide-react';
 import { MenuItem, ExtraOption, CartItemOption } from '../types';
 import { formatCurrency } from '../utils/whatsapp';
 
@@ -30,6 +31,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   );
   const [selectedExtras, setSelectedExtras] = useState<ExtraOption[]>([]);
   const [notes, setNotes] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   // Calculate dynamic unit price with crust & extras
   let crustPrice = 0;
@@ -48,24 +51,46 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   };
 
   const handleConfirm = () => {
-    onAddToCart(item, quantity, {
-      breadType: item.allowsBreadChoice ? breadType : undefined,
-      meatDoneness: item.allowsMeatDoneness ? meatDoneness : undefined,
-      pizzaCrust: item.allowsCrustChoice ? pizzaCrust : undefined,
-      selectedExtras,
-      notes,
-    });
-    onClose();
+    if (isSubmitting || isSuccess) return;
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSuccess(true);
+      onAddToCart(item, quantity, {
+        breadType: item.allowsBreadChoice ? breadType : undefined,
+        meatDoneness: item.allowsMeatDoneness ? meatDoneness : undefined,
+        pizzaCrust: item.allowsCrustChoice ? pizzaCrust : undefined,
+        selectedExtras,
+        notes,
+      });
+      setTimeout(() => {
+        onClose();
+      }, 350);
+    }, 200);
   };
 
   return (
     <div 
       id="product-customization-modal"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto animate-fadeIn"
-      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto"
     >
-      <div 
-        className="bg-[#1A1614] border border-white/10 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl shadow-black my-8 relative flex flex-col max-h-[90vh]"
+      {/* Backdrop */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="fixed inset-0 bg-black/85 backdrop-blur-md"
+      />
+
+      {/* Modal Dialog */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95, y: 16 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 16 }}
+        transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+        className="bg-[#1A1614] border border-white/10 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl shadow-black my-8 relative z-10 flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         
@@ -78,13 +103,15 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/60" />
           
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={onClose}
             className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/80 hover:bg-black text-[#FDFBF7] flex items-center justify-center border border-white/20 transition-all cursor-pointer"
             aria-label="Fechar"
           >
             <X className="w-5 h-5" />
-          </button>
+          </motion.button>
 
           {item.badge && (
             <div className="absolute top-4 left-4 bg-[#0D0B0A]/90 backdrop-blur-md border border-white/10 text-[#EAB308] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
@@ -103,7 +130,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
         </div>
 
         {/* Scrollable Configuration Body */}
-        <div className="p-5 overflow-y-auto space-y-6 flex-1 text-sm">
+        <div className="p-5 overflow-y-auto space-y-6 flex-1 text-sm custom-scrollbar">
           
           {/* Item Description */}
           <div className="bg-[#221C18] p-3.5 rounded-xl border border-white/5 text-[#A8A29E] text-xs leading-relaxed font-sans-body">
@@ -119,8 +146,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               </label>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                <button
+                <motion.button
                   type="button"
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => setBreadType('Pão Francês Especial Crocante')}
                   className={`p-3 rounded-xl border text-left flex flex-col justify-between transition-all cursor-pointer ${
                     breadType === 'Pão Francês Especial Crocante'
@@ -133,10 +161,11 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                     {breadType === 'Pão Francês Especial Crocante' && <Check className="w-4 h-4 text-[#EAB308]" />}
                   </div>
                   <span className="text-[11px] text-[#EAB308] mt-1 font-medium">⭐ O preferido da casa! Super crocante</span>
-                </button>
+                </motion.button>
 
-                <button
+                <motion.button
                   type="button"
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => setBreadType('Pão Brioche Selado na Manteiga')}
                   className={`p-3 rounded-xl border text-left flex flex-col justify-between transition-all cursor-pointer ${
                     breadType === 'Pão Brioche Selado na Manteiga'
@@ -149,7 +178,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                     {breadType === 'Pão Brioche Selado na Manteiga' && <Check className="w-4 h-4 text-[#EAB308]" />}
                   </div>
                   <span className="text-[11px] text-[#A8A29E] mt-1">Fofinho e selado na manteiga</span>
-                </button>
+                </motion.button>
               </div>
             </div>
           )}
@@ -167,9 +196,10 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   'Bem Passado',
                   'Ao Ponto para Mal Passado'
                 ].map((doneness) => (
-                  <button
+                  <motion.button
                     key={doneness}
                     type="button"
+                    whileTap={{ scale: 0.96 }}
                     onClick={() => setMeatDoneness(doneness as any)}
                     className={`py-2 px-2.5 rounded-xl border text-center text-xs font-medium transition-all cursor-pointer ${
                       meatDoneness === doneness
@@ -178,7 +208,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                     }`}
                   >
                     {doneness.replace(' (Suculento)', '')}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </div>
@@ -197,9 +227,10 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   { label: 'Borda Vulcão Catupiry Original (+R$ 8,00)', price: '+ R$ 8,00' },
                   { label: 'Borda Vulcão Cheddar (+R$ 8,00)', price: '+ R$ 8,00' },
                 ].map((crust) => (
-                  <button
+                  <motion.button
                     key={crust.label}
                     type="button"
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => setPizzaCrust(crust.label as any)}
                     className={`w-full p-2.5 rounded-xl border text-left flex items-center justify-between transition-all cursor-pointer ${
                       pizzaCrust === crust.label
@@ -209,7 +240,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   >
                     <span className="text-xs">{crust.label.split(' (+')[0]}</span>
                     <span className="text-xs font-bold text-[#EAB308]">{crust.price}</span>
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </div>
@@ -227,8 +258,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 {item.availableExtras.map((extra) => {
                   const isChecked = selectedExtras.some((e) => e.id === extra.id);
                   return (
-                    <div
+                    <motion.div
                       key={extra.id}
+                      whileTap={{ scale: 0.98 }}
                       onClick={() => handleToggleExtra(extra)}
                       className={`p-2.5 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
                         isChecked
@@ -251,7 +283,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                       <span className="text-xs font-bold text-[#EAB308]">
                         + {formatCurrency(extra.price)}
                       </span>
-                    </div>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -274,38 +306,72 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
         </div>
 
-        {/* Modal Footer (Quantity + Add to Cart CTA) */}
+        {/* Modal Footer (Quantity + Add to Cart CTA with feedback) */}
         <div className="p-4 bg-[#0D0B0A] border-t border-white/10 flex items-center justify-between gap-4">
           {/* Quantity selector */}
           <div className="flex items-center bg-[#221C18] border border-white/10 rounded-xl p-1">
-            <button
+            <motion.button
+              type="button"
+              whileTap={{ scale: 0.9 }}
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="w-8 h-8 rounded-lg bg-[#1A1614] hover:bg-[#221C18] text-[#FDFBF7] flex items-center justify-center cursor-pointer transition-colors active:scale-95"
+              className="w-8 h-8 rounded-lg bg-[#1A1614] hover:bg-[#221C18] text-[#FDFBF7] flex items-center justify-center cursor-pointer transition-colors"
+              disabled={quantity <= 1 || isSubmitting}
             >
               <Minus className="w-3.5 h-3.5" />
-            </button>
+            </motion.button>
             <span className="w-8 text-center text-sm font-bold text-[#FDFBF7]">
               {quantity}
             </span>
-            <button
+            <motion.button
+              type="button"
+              whileTap={{ scale: 0.9 }}
               onClick={() => setQuantity(quantity + 1)}
-              className="w-8 h-8 rounded-lg bg-[#D97706] hover:bg-[#E65100] text-black flex items-center justify-center cursor-pointer transition-colors active:scale-95 font-bold"
+              className="w-8 h-8 rounded-lg bg-[#D97706] hover:bg-[#E65100] text-black flex items-center justify-center cursor-pointer transition-colors font-bold"
+              disabled={isSubmitting}
             >
               <Plus className="w-3.5 h-3.5 stroke-[3]" />
-            </button>
+            </motion.button>
           </div>
 
           {/* Add CTA */}
-          <button
+          <motion.button
+            type="button"
+            whileHover={{ scale: isSubmitting || isSuccess ? 1 : 1.02 }}
+            whileTap={{ scale: isSubmitting || isSuccess ? 1 : 0.98 }}
             onClick={handleConfirm}
-            className="flex-1 inline-flex items-center justify-center gap-2.5 bg-[#D97706] hover:bg-[#E65100] text-black font-bold text-xs uppercase tracking-wider py-3.5 px-4 rounded-xl shadow-xl active:scale-98 transition-all cursor-pointer"
+            disabled={isSubmitting || isSuccess}
+            className={`flex-1 inline-flex items-center justify-between font-bold text-xs uppercase tracking-wider py-3.5 px-4 rounded-xl shadow-xl transition-all cursor-pointer ${
+              isSuccess 
+                ? 'bg-[#25D366] text-black' 
+                : 'bg-[#D97706] hover:bg-[#E65100] text-black'
+            }`}
           >
-            <ShoppingBag className="w-4 h-4 text-black" />
-            <span>Adicionar • {formatCurrency(totalPrice)}</span>
-          </button>
+            <span className="flex items-center gap-2">
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin text-black" />
+                  <span>Adicionando...</span>
+                </>
+              ) : isSuccess ? (
+                <>
+                  <Check className="w-4 h-4 stroke-[3] text-black" />
+                  <span>Adicionado!</span>
+                </>
+              ) : (
+                <>
+                  <ShoppingBag className="w-4 h-4 text-black" />
+                  <span>Adicionar ao Pedido</span>
+                </>
+              )}
+            </span>
+            <span className="bg-black/20 border border-black/30 px-2 py-0.5 rounded text-[11px] font-black">
+              {formatCurrency(totalPrice)}
+            </span>
+          </motion.button>
         </div>
 
-      </div>
+      </motion.div>
     </div>
   );
 };
+

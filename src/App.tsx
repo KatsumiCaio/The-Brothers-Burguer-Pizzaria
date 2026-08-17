@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import { AnimatePresence } from 'motion/react';
 import { MenuItem, MenuCategory, CartItem, CartItemOption } from './types';
 import { TopAnnouncementBar } from './components/TopAnnouncementBar';
 import { Navbar } from './components/Navbar';
@@ -18,6 +19,7 @@ import { LocationHoursSection } from './components/LocationHoursSection';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ReservationModal } from './components/ReservationModal';
+import { ToastContainer, ToastMessage } from './components/Toast';
 
 export default function App() {
   // Navigation & Category state
@@ -31,6 +33,18 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState<MenuItem | null>(null);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isReservationOpen, setIsReservationOpen] = useState(false);
+
+  // Toast feedback state
+  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+
+  const showToast = (toast: Omit<ToastMessage, 'id'>) => {
+    const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
+    setToasts((prev) => [...prev, { ...toast, id }]);
+  };
+
+  const dismissToast = (id: string) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
 
   // Computed Cart values
   const cartCount = useMemo(() => {
@@ -72,6 +86,12 @@ export default function App() {
     };
 
     setCartItems((prev) => [...prev, newItem]);
+    showToast({
+      title: `${item.name} adicionado!`,
+      description: `${quantity}x no seu pedido (${options.breadType || 'Opções personalizadas'})`,
+      actionLabel: 'Ver Carrinho',
+      onAction: () => setIsCartOpen(true),
+    });
   };
 
   const handleDirectAdd = (item: MenuItem) => {
@@ -111,6 +131,13 @@ export default function App() {
       };
       setCartItems((prev) => [...prev, newItem]);
     }
+
+    showToast({
+      title: `${item.name} adicionado!`,
+      description: 'Item inserido no pedido com sucesso.',
+      actionLabel: 'Ver Carrinho',
+      onAction: () => setIsCartOpen(true),
+    });
   };
 
   const handleUpdateQuantity = (cartItemId: string, newQuantity: number) => {
@@ -138,6 +165,11 @@ export default function App() {
 
   const handleClearCart = () => {
     setCartItems([]);
+    showToast({
+      title: 'Carrinho esvaziado',
+      description: 'Todos os itens foram removidos do seu pedido.',
+      type: 'warning',
+    });
   };
 
   const scrollToMenu = () => {
@@ -200,31 +232,47 @@ export default function App() {
       {/* Floating WhatsApp Action Button */}
       <FloatingWhatsApp />
 
+      {/* Toast Notification Stack */}
+      <ToastContainer toasts={toasts} onDismiss={dismissToast} />
+
       {/* Modals & Drawers */}
-      <ProductModal
-        item={selectedProduct}
-        isOpen={isProductModalOpen}
-        onClose={() => {
-          setIsProductModalOpen(false);
-          setSelectedProduct(null);
-        }}
-        onAddToCart={handleAddToCart}
-      />
+      <AnimatePresence>
+        {isProductModalOpen && (
+          <ProductModal
+            item={selectedProduct}
+            isOpen={isProductModalOpen}
+            onClose={() => {
+              setIsProductModalOpen(false);
+              setSelectedProduct(null);
+            }}
+            onAddToCart={handleAddToCart}
+          />
+        )}
+      </AnimatePresence>
 
-      <CartDrawer
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cartItems={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
-        onClearCart={handleClearCart}
-      />
+      <AnimatePresence>
+        {isCartOpen && (
+          <CartDrawer
+            isOpen={isCartOpen}
+            onClose={() => setIsCartOpen(false)}
+            cartItems={cartItems}
+            onUpdateQuantity={handleUpdateQuantity}
+            onRemoveItem={handleRemoveItem}
+            onClearCart={handleClearCart}
+          />
+        )}
+      </AnimatePresence>
 
-      <ReservationModal
-        isOpen={isReservationOpen}
-        onClose={() => setIsReservationOpen(false)}
-      />
+      <AnimatePresence>
+        {isReservationOpen && (
+          <ReservationModal
+            isOpen={isReservationOpen}
+            onClose={() => setIsReservationOpen(false)}
+          />
+        )}
+      </AnimatePresence>
 
     </div>
   );
 }
+

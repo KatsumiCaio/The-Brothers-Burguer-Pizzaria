@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { Star, MapPin, Sparkles, Flame, ArrowRight, Utensils, Beer, Clock, ShieldCheck } from 'lucide-react';
 import { RESTAURANT_INFO } from '../data/menuData';
 
@@ -27,7 +28,12 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onOpenReservation }) 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
           
           {/* Left Column: Editorial Headlines & CTAs (7 cols) */}
-          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6"
+          >
             
             {/* Social Proof & Location Badges */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
@@ -89,24 +95,28 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onOpenReservation }) 
 
             {/* Sophisticated Dark Action CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto pt-2">
-              <button
+              <motion.button
                 id="hero-cta-menu"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={onExploreMenu}
-                className="inline-flex items-center justify-center gap-3 bg-[#D97706] hover:bg-[#E65100] text-black font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full shadow-xl transition-all duration-200 cursor-pointer active:scale-95"
+                className="inline-flex items-center justify-center gap-3 bg-[#D97706] hover:bg-[#E65100] text-black font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full shadow-xl transition-all duration-200 cursor-pointer"
               >
                 <Utensils className="w-4 h-4 text-black" />
                 <span>Explorar Cardápio</span>
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </motion.button>
 
-              <button
+              <motion.button
                 id="hero-cta-reservation"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={onOpenReservation}
-                className="inline-flex items-center justify-center gap-2.5 bg-[#1A1614] hover:bg-[#221C18] border border-[#D97706]/50 hover:border-[#D97706] text-[#EAB308] hover:text-[#FDFBF7] font-bold text-xs uppercase tracking-widest px-7 py-4 rounded-full shadow-md transition-all duration-200 cursor-pointer active:scale-95"
+                className="inline-flex items-center justify-center gap-2.5 bg-[#1A1614] hover:bg-[#221C18] border border-[#D97706]/50 hover:border-[#D97706] text-[#EAB308] hover:text-[#FDFBF7] font-bold text-xs uppercase tracking-widest px-7 py-4 rounded-full shadow-md transition-all duration-200 cursor-pointer"
               >
                 <Flame className="w-4 h-4 text-[#D97706]" />
                 <span>Reservar Mesa</span>
-              </button>
+              </motion.button>
             </div>
 
             {/* Delivery Info */}
@@ -114,10 +124,15 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onOpenReservation }) 
               <ShieldCheck className="w-4 h-4 text-[#25D366]" />
               <span>Entrega rápida em toda Capão Bonito (~35 min) ou retirada no balcão</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Visual Showcase (5 cols) */}
-          <div className="lg:col-span-5 relative">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
+            className="lg:col-span-5 relative"
+          >
             <div className="relative mx-auto max-w-md lg:max-w-none">
               
               {/* Decorative Glow Behind Image */}
@@ -157,7 +172,12 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onOpenReservation }) 
               </div>
 
               {/* Floating Second Mini Card: Fresh Pizza */}
-              <div className="hidden sm:flex absolute -bottom-5 -left-5 bg-[#1A1614] border border-white/10 p-3.5 rounded-xl shadow-2xl items-center gap-3 max-w-xs">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="hidden sm:flex absolute -bottom-5 -left-5 bg-[#1A1614] border border-white/10 p-3.5 rounded-xl shadow-2xl items-center gap-3 max-w-xs"
+              >
                 <img 
                   src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=200&q=80" 
                   alt="Pizza Forneada" 
@@ -168,10 +188,15 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onOpenReservation }) 
                   <p className="text-xs font-bold text-[#FDFBF7]">Bordas Vulcão Recheadas</p>
                   <span className="text-[10px] text-[#A8A29E]">Catupiry Original®</span>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Floating Third Mini Card: Cold Beer */}
-              <div className="hidden sm:flex absolute -top-5 -right-3 bg-[#1A1614] border border-white/10 p-3 rounded-xl shadow-2xl items-center gap-2.5">
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="hidden sm:flex absolute -top-5 -right-3 bg-[#1A1614] border border-white/10 p-3 rounded-xl shadow-2xl items-center gap-2.5"
+              >
                 <div className="w-9 h-9 rounded-lg bg-[#221C18] border border-white/10 flex items-center justify-center text-lg">
                   🍺
                 </div>
@@ -179,14 +204,15 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onOpenReservation }) 
                   <p className="text-xs font-bold text-[#FDFBF7]">Chopp Artesanal</p>
                   <span className="text-[10px] text-[#EAB308] font-semibold uppercase tracking-wider">Caneca Congelada</span>
                 </div>
-              </div>
+              </motion.div>
 
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>
     </section>
   );
 };
+
 

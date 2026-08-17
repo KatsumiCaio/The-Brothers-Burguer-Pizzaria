@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { Flame, Sparkles, Calendar, Clock, Users, ArrowRight, ShieldCheck } from 'lucide-react';
 import { RESTAURANT_INFO } from '../data/menuData';
 
@@ -84,15 +85,17 @@ export const FridayRodizioSection: React.FC<FridayRodizioSectionProps> = ({ onOp
 
               {/* Call to action */}
               <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <button
+                <motion.button
                   id="btn-reserve-rodizio-cta"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                   onClick={onOpenReservation}
-                  className="inline-flex items-center justify-center gap-3 bg-[#D97706] hover:bg-[#E65100] text-black font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full shadow-xl transition-all cursor-pointer active:scale-95"
+                  className="inline-flex items-center justify-center gap-3 bg-[#D97706] hover:bg-[#E65100] text-black font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full shadow-xl transition-all cursor-pointer"
                 >
                   <Flame className="w-4 h-4 text-black" />
                   <span>Reservar Mesa Para Sexta</span>
                   <ArrowRight className="w-4 h-4" />
-                </button>
+                </motion.button>
                 
                 <span className="text-xs text-[#A8A29E] text-center sm:text-left">
                   ⚡ Lugares limitados. Garanta sua reserva antecipada!
@@ -136,4 +139,5 @@ export const FridayRodizioSection: React.FC<FridayRodizioSectionProps> = ({ onOp
     </section>
   );
 };
+
 
