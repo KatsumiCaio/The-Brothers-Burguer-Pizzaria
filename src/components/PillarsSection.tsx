@@ -29,7 +29,7 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({
       description: 'Massa artesanal leve e crocante, bordas vulcão recheadas com Catupiry Original ou Cheddar e coberturas super generosas.',
       icon: '🍕',
       actionLabel: 'Ver Pizzas',
-      categoryTarget: 'pizzas_salgadas',
+      categoryTarget: 'pizzas',
       image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=600&q=80',
       accentColor: 'from-yellow-600 to-amber-600'
     },

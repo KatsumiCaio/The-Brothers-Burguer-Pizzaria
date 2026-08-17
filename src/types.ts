@@ -1,10 +1,11 @@
 export type MenuCategory = 
   | 'mais_pedidos' 
   | 'burguers' 
-  | 'pizzas_salgadas' 
-  | 'pizzas_doces' 
+  | 'burguer_especial'
+  | 'pizzas' 
   | 'porcoes' 
-  | 'bebidas';
+  | 'bebidas'
+  | 'doces';
 
 export interface ExtraOption {
   id: string;
