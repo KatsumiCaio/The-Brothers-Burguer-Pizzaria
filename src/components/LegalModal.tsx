@@ -38,20 +38,20 @@ export const LegalModal: React.FC<LegalModalProps> = ({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 16 }}
         transition={{ type: 'spring', stiffness: 450, damping: 30 }}
-        className="bg-[#1A1614] border border-white/10 rounded-3xl w-full max-w-2xl max-h-[85vh] overflow-hidden shadow-2xl p-6 relative z-10 flex flex-col space-y-4"
+        className="bg-[#201B18] border border-white/10 rounded-3xl w-full max-w-2xl max-h-[85vh] overflow-hidden shadow-2xl p-6 relative z-10 flex flex-col space-y-4"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#221C18] border border-white/10 flex items-center justify-center text-[#EAB308]">
+            <div className="w-10 h-10 rounded-xl bg-[#2A231E] border border-white/10 flex items-center justify-center text-[#E27D60]">
               {activeTab === 'terms' ? <FileText className="w-5 h-5" /> : <Lock className="w-5 h-5 text-[#25D366]" />}
             </div>
             <div>
-              <h3 className="text-base font-bold font-serif text-[#FDFBF7]">
+              <h3 className="text-base font-bold font-serif text-[#FFF8F3]">
                 {activeTab === 'terms' ? 'Termos de Uso & Serviço' : 'Política de Privacidade & LGPD'}
               </h3>
-              <p className="text-[11px] text-[#A8A29E]">The Brothers Burguer & Pizzaria • Capão Bonito/SP</p>
+              <p className="text-[11px] text-[#C4B8B0]">The Brothers Burguer & Pizzaria • Capão Bonito/SP</p>
             </div>
           </div>
 
@@ -59,21 +59,22 @@ export const LegalModal: React.FC<LegalModalProps> = ({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-[#221C18] text-[#FDFBF7] hover:bg-[#1A1614] flex items-center justify-center border border-white/10 cursor-pointer"
+            className="w-8 h-8 rounded-full bg-[#2A231E] text-[#FFF8F3] hover:bg-[#201B18] flex items-center justify-center border border-white/10 cursor-pointer"
+            aria-label="Fechar termos"
           >
             <X className="w-4 h-4" />
           </motion.button>
         </div>
 
         {/* Tab Switcher */}
-        <div className="grid grid-cols-2 gap-2 bg-[#0D0B0A] p-1 rounded-xl border border-white/5">
+        <div className="grid grid-cols-2 gap-2 bg-[#12100E] p-1 rounded-xl border border-white/5">
           <button
             type="button"
             onClick={() => setActiveTab('terms')}
             className={`py-2 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'terms'
-                ? 'bg-[#221C18] text-[#EAB308] shadow-sm border border-white/10'
-                : 'text-[#A8A29E] hover:text-[#FDFBF7]'
+                ? 'bg-[#2A231E] text-[#F8D8C8] shadow-sm border border-white/10'
+                : 'text-[#C4B8B0] hover:text-[#FFF8F3]'
             }`}
           >
             📄 Termos de Uso
@@ -83,8 +84,8 @@ export const LegalModal: React.FC<LegalModalProps> = ({
             onClick={() => setActiveTab('privacy')}
             className={`py-2 px-3 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'privacy'
-                ? 'bg-[#221C18] text-[#25D366] shadow-sm border border-white/10'
-                : 'text-[#A8A29E] hover:text-[#FDFBF7]'
+                ? 'bg-[#2A231E] text-[#25D366] shadow-sm border border-white/10'
+                : 'text-[#C4B8B0] hover:text-[#FFF8F3]'
             }`}
           >
             🔒 Privacidade & LGPD
@@ -92,12 +93,12 @@ export const LegalModal: React.FC<LegalModalProps> = ({
         </div>
 
         {/* Scrollable Content */}
-        <div className="overflow-y-auto pr-2 space-y-4 text-xs text-[#A8A29E] leading-relaxed max-h-[50vh]">
+        <div className="overflow-y-auto pr-2 space-y-4 text-xs text-[#C4B8B0] leading-relaxed max-h-[50vh] custom-scrollbar">
           {activeTab === 'terms' ? (
             <>
               <div className="space-y-2">
-                <h4 className="text-sm font-bold text-[#FDFBF7] flex items-center gap-1.5">
-                  <Building2 className="w-4 h-4 text-[#D97706]" />
+                <h4 className="text-sm font-bold text-[#FFF8F3] flex items-center gap-1.5">
+                  <Building2 className="w-4 h-4 text-[#E27D60]" />
                   1. Sobre o Cardápio Digital & Atendimento
                 </h4>
                 <p>
@@ -106,21 +107,21 @@ export const LegalModal: React.FC<LegalModalProps> = ({
               </div>
 
               <div className="space-y-2">
-                <h4 className="text-sm font-bold text-[#FDFBF7]">2. Pedidos e Confirmação via WhatsApp</h4>
+                <h4 className="text-sm font-bold text-[#FFF8F3]">2. Pedidos e Confirmação via WhatsApp</h4>
                 <p>
                   A finalização do pedido é realizada mediante o envio estruturado dos itens para o WhatsApp oficial do restaurante ({RESTAURANT_INFO.whatsappFormatted}). O pedido é considerado confirmado apenas após resposta e validação pela equipe de atendimento da The Brothers.
                 </p>
               </div>
 
               <div className="space-y-2">
-                <h4 className="text-sm font-bold text-[#FDFBF7]">3. Horários de Funcionamento e Entregas</h4>
+                <h4 className="text-sm font-bold text-[#FFF8F3]">3. Horários de Funcionamento e Entregas</h4>
                 <p>
                   Nosso atendimento opera regularmente de Terça a Domingo, das 18h30 às 23h30. Pedidos efetuados fora deste horário serão respondidos no início do próximo expediente. O tempo médio estimado de entrega em Capão Bonito é de 30 a 45 minutos.
                 </p>
               </div>
 
               <div className="space-y-2">
-                <h4 className="text-sm font-bold text-[#FDFBF7]">4. Formas de Pagamento</h4>
+                <h4 className="text-sm font-bold text-[#FFF8F3]">4. Formas de Pagamento</h4>
                 <p>
                   Aceitamos pagamentos via PIX, Cartões de Débito/Crédito na maquininha móvel e Dinheiro com opção de troco informado previamente.
                 </p>
@@ -129,7 +130,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
           ) : (
             <>
               <div className="space-y-2">
-                <h4 className="text-sm font-bold text-[#FDFBF7] flex items-center gap-1.5">
+                <h4 className="text-sm font-bold text-[#FFF8F3] flex items-center gap-1.5">
                   <ShieldCheck className="w-4 h-4 text-[#25D366]" />
                   1. Conformidade com a LGPD (Lei nº 13.709/2018)
                 </h4>
@@ -139,21 +140,21 @@ export const LegalModal: React.FC<LegalModalProps> = ({
               </div>
 
               <div className="space-y-2">
-                <h4 className="text-sm font-bold text-[#FDFBF7]">2. Não Compartilhamento com Terceiros</h4>
+                <h4 className="text-sm font-bold text-[#FFF8F3]">2. Não Compartilhamento com Terceiros</h4>
                 <p>
                   Não comercializamos, alugamos ou compartilhamos dados pessoais com terceiros para fins de marketing ou publicidade não solicitada.
                 </p>
               </div>
 
               <div className="space-y-2">
-                <h4 className="text-sm font-bold text-[#FDFBF7]">3. Armazenamento Local e Segurança</h4>
+                <h4 className="text-sm font-bold text-[#FFF8F3]">3. Armazenamento Local e Segurança</h4>
                 <p>
                   Itens do carrinho e preferências de pedido são mantidos localmente no navegador do usuário (client-side storage) para conveniência de navegação e podem ser limpos a qualquer momento através do botão "Limpar Pedido".
                 </p>
               </div>
 
               <div className="space-y-2">
-                <h4 className="text-sm font-bold text-[#FDFBF7]">4. Contato do Encarregado de Dados</h4>
+                <h4 className="text-sm font-bold text-[#FFF8F3]">4. Contato do Encarregado de Dados</h4>
                 <p>
                   Para dúvidas sobre seus dados ou solicitação de exclusão de registros de atendimento, entre em contato diretamente pelo WhatsApp: {RESTAURANT_INFO.whatsappFormatted}.
                 </p>
@@ -166,7 +167,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
         <div className="border-t border-white/10 pt-3 flex items-center justify-end">
           <button
             onClick={onClose}
-            className="bg-[#221C18] hover:bg-[#1A1614] text-[#FDFBF7] border border-white/10 px-5 py-2.5 rounded-xl text-xs font-bold cursor-pointer"
+            className="bg-[#2A231E] hover:bg-[#342C26] text-[#FFF8F3] border border-white/10 px-5 py-2.5 rounded-xl text-xs font-bold cursor-pointer min-h-[44px]"
           >
             Entendido e Concordo
           </button>

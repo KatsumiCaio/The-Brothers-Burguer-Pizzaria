@@ -46,26 +46,26 @@ const ToastItem: React.FC<{ toast: ToastMessage; onDismiss: () => void }> = ({ t
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9, y: 10, transition: { duration: 0.2 } }}
       transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-      className="pointer-events-auto bg-[#1A1614] border border-[#D97706]/40 text-[#FDFBF7] p-4 rounded-2xl shadow-2xl shadow-black/90 flex items-start justify-between gap-3 relative overflow-hidden backdrop-blur-xl"
+      className="pointer-events-auto bg-[#201B18] border border-[#E27D60]/40 text-[#FFF8F3] p-4 rounded-2xl shadow-2xl shadow-black/90 flex items-start justify-between gap-3 relative overflow-hidden backdrop-blur-xl"
     >
       {/* Subtle Top Accent Shimmer */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#D97706] to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#E27D60] to-transparent" />
 
       <div className="flex items-start gap-3">
-        <div className="w-8 h-8 rounded-xl bg-[#D97706]/15 border border-[#D97706]/30 flex items-center justify-center text-[#EAB308] flex-shrink-0 mt-0.5">
+        <div className="w-8 h-8 rounded-xl bg-[#E27D60]/15 border border-[#E27D60]/30 flex items-center justify-center text-[#F8D8C8] flex-shrink-0 mt-0.5">
           {toast.type === 'warning' ? (
-            <AlertCircle className="w-4 h-4 text-[#EAB308]" />
+            <AlertCircle className="w-4 h-4 text-[#F8D8C8]" />
           ) : (
-            <ShoppingBag className="w-4 h-4 text-[#EAB308]" />
+            <ShoppingBag className="w-4 h-4 text-[#F8D8C8]" />
           )}
         </div>
 
         <div className="space-y-0.5">
-          <h4 className="text-xs font-bold text-[#FDFBF7] font-serif-display leading-tight">
+          <h4 className="text-xs font-bold text-[#FFF8F3] font-serif-display leading-tight">
             {toast.title}
           </h4>
           {toast.description && (
-            <p className="text-[11px] text-[#A8A29E] leading-relaxed">
+            <p className="text-[11px] text-[#C4B8B0] leading-relaxed">
               {toast.description}
             </p>
           )}
@@ -76,7 +76,7 @@ const ToastItem: React.FC<{ toast: ToastMessage; onDismiss: () => void }> = ({ t
                 toast.onAction?.();
                 onDismiss();
               }}
-              className="mt-1.5 inline-flex items-center text-[11px] font-bold text-[#EAB308] hover:text-[#FDFBF7] underline uppercase tracking-wider cursor-pointer"
+              className="mt-1.5 inline-flex items-center text-[11px] font-bold text-[#E27D60] hover:text-[#FFF8F3] underline uppercase tracking-wider cursor-pointer"
             >
               {toast.actionLabel}
             </button>
@@ -86,7 +86,7 @@ const ToastItem: React.FC<{ toast: ToastMessage; onDismiss: () => void }> = ({ t
 
       <button
         onClick={onDismiss}
-        className="w-6 h-6 rounded-md text-[#A8A29E] hover:text-[#FDFBF7] hover:bg-[#221C18] flex items-center justify-center transition-colors cursor-pointer flex-shrink-0"
+        className="w-6 h-6 rounded-md text-[#C4B8B0] hover:text-[#FFF8F3] hover:bg-[#2A231E] flex items-center justify-center transition-colors cursor-pointer flex-shrink-0"
         aria-label="Fechar notificação"
       >
         <X className="w-3.5 h-3.5" />

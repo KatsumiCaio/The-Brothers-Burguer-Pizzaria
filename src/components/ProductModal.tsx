@@ -90,7 +90,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 16 }}
         transition={{ type: 'spring', stiffness: 450, damping: 30 }}
-        className="bg-[#1A1614] border border-white/10 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl shadow-black my-8 relative z-10 flex flex-col max-h-[90vh]"
+        className="bg-[#201B18] border border-white/10 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl shadow-black my-8 relative z-10 flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         
@@ -101,29 +101,29 @@ export const ProductModal: React.FC<ProductModalProps> = ({
             alt={item.name} 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#201B18] via-transparent to-black/60" />
           
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={onClose}
-            className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/80 hover:bg-black text-[#FDFBF7] flex items-center justify-center border border-white/20 transition-all cursor-pointer"
+            className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/80 hover:bg-black text-[#FFF8F3] flex items-center justify-center border border-white/20 transition-all cursor-pointer"
             aria-label="Fechar"
           >
             <X className="w-5 h-5" />
           </motion.button>
 
           {item.badge && (
-            <div className="absolute top-4 left-4 bg-[#0D0B0A]/90 backdrop-blur-md border border-white/10 text-[#EAB308] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
+            <div className="absolute top-4 left-4 bg-[#12100E]/90 backdrop-blur-md border border-white/10 text-[#F8D8C8] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
               {item.badge}
             </div>
           )}
 
           <div className="absolute bottom-3 left-4 right-4">
-            <h3 className="text-xl font-serif-display font-bold text-[#FDFBF7] leading-snug">
+            <h3 className="text-xl font-serif-display font-bold text-[#FFF8F3] leading-snug">
               {item.name}
             </h3>
-            <p className="text-[#EAB308] font-bold text-lg mt-0.5">
+            <p className="text-[#E27D60] font-bold text-lg mt-0.5">
               {formatCurrency(item.price)}
             </p>
           </div>
@@ -133,16 +133,16 @@ export const ProductModal: React.FC<ProductModalProps> = ({
         <div className="p-5 overflow-y-auto space-y-6 flex-1 text-sm custom-scrollbar">
           
           {/* Item Description */}
-          <div className="bg-[#221C18] p-3.5 rounded-xl border border-white/5 text-[#A8A29E] text-xs leading-relaxed font-sans-body">
+          <div className="bg-[#2A231E] p-3.5 rounded-xl border border-white/5 text-[#C4B8B0] text-xs leading-relaxed font-sans-body">
             {item.description}
           </div>
 
           {/* Option: Bread Choice for Burgers */}
           {item.allowsBreadChoice && (
             <div className="space-y-2.5">
-              <label className="text-xs font-bold text-[#EAB308] uppercase tracking-wider flex items-center gap-1.5">
+              <label className="text-xs font-bold text-[#F8D8C8] uppercase tracking-wider flex items-center gap-1.5">
                 <span>🥖 Escolha o seu Pão:</span>
-                <span className="text-[10px] text-[#A8A29E] font-normal">(Obrigatório)</span>
+                <span className="text-[10px] text-[#C4B8B0] font-normal">(Obrigatório)</span>
               </label>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -152,15 +152,15 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   onClick={() => setBreadType('Pão Francês Especial Crocante')}
                   className={`p-3 rounded-xl border text-left flex flex-col justify-between transition-all cursor-pointer ${
                     breadType === 'Pão Francês Especial Crocante'
-                      ? 'bg-[#D97706]/15 border-[#D97706] text-[#FDFBF7] ring-1 ring-[#D97706]'
-                      : 'bg-[#221C18] border-white/10 text-[#A8A29E] hover:border-white/20'
+                      ? 'bg-[#E27D60]/15 border-[#E27D60] text-[#FFF8F3] ring-1 ring-[#E27D60]'
+                      : 'bg-[#2A231E] border-white/10 text-[#C4B8B0] hover:border-white/20'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-xs">Pão Francês Especial</span>
-                    {breadType === 'Pão Francês Especial Crocante' && <Check className="w-4 h-4 text-[#EAB308]" />}
+                    {breadType === 'Pão Francês Especial Crocante' && <Check className="w-4 h-4 text-[#E27D60]" />}
                   </div>
-                  <span className="text-[11px] text-[#EAB308] mt-1 font-medium">⭐ O preferido da casa! Super crocante</span>
+                  <span className="text-[11px] text-[#F8D8C8] mt-1 font-medium">⭐ O preferido da casa! Super crocante</span>
                 </motion.button>
 
                 <motion.button
@@ -169,15 +169,15 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   onClick={() => setBreadType('Pão Brioche Selado na Manteiga')}
                   className={`p-3 rounded-xl border text-left flex flex-col justify-between transition-all cursor-pointer ${
                     breadType === 'Pão Brioche Selado na Manteiga'
-                      ? 'bg-[#D97706]/15 border-[#D97706] text-[#FDFBF7] ring-1 ring-[#D97706]'
-                      : 'bg-[#221C18] border-white/10 text-[#A8A29E] hover:border-white/20'
+                      ? 'bg-[#E27D60]/15 border-[#E27D60] text-[#FFF8F3] ring-1 ring-[#E27D60]'
+                      : 'bg-[#2A231E] border-white/10 text-[#C4B8B0] hover:border-white/20'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-xs">Pão Brioche Amanteigado</span>
-                    {breadType === 'Pão Brioche Selado na Manteiga' && <Check className="w-4 h-4 text-[#EAB308]" />}
+                    {breadType === 'Pão Brioche Selado na Manteiga' && <Check className="w-4 h-4 text-[#E27D60]" />}
                   </div>
-                  <span className="text-[11px] text-[#A8A29E] mt-1">Fofinho e selado na manteiga</span>
+                  <span className="text-[11px] text-[#C4B8B0] mt-1">Fofinho e selado na manteiga</span>
                 </motion.button>
               </div>
             </div>
@@ -186,7 +186,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           {/* Option: Meat Doneness */}
           {item.allowsMeatDoneness && (
             <div className="space-y-2.5">
-              <label className="text-xs font-bold text-[#EAB308] uppercase tracking-wider">
+              <label className="text-xs font-bold text-[#F8D8C8] uppercase tracking-wider">
                 🥩 Ponto da Carne:
               </label>
               
@@ -203,8 +203,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                     onClick={() => setMeatDoneness(doneness as any)}
                     className={`py-2 px-2.5 rounded-xl border text-center text-xs font-medium transition-all cursor-pointer ${
                       meatDoneness === doneness
-                        ? 'bg-[#D97706]/15 border-[#D97706] text-[#EAB308] font-bold ring-1 ring-[#D97706]'
-                        : 'bg-[#221C18] border-white/10 text-[#A8A29E] hover:text-[#FDFBF7]'
+                        ? 'bg-[#E27D60]/15 border-[#E27D60] text-[#F8D8C8] font-bold ring-1 ring-[#E27D60]'
+                        : 'bg-[#2A231E] border-white/10 text-[#C4B8B0] hover:text-[#FFF8F3]'
                     }`}
                   >
                     {doneness.replace(' (Suculento)', '')}
@@ -217,7 +217,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           {/* Option: Pizza Crust */}
           {item.allowsCrustChoice && (
             <div className="space-y-2.5">
-              <label className="text-xs font-bold text-[#EAB308] uppercase tracking-wider">
+              <label className="text-xs font-bold text-[#F8D8C8] uppercase tracking-wider">
                 🍕 Borda Recheada:
               </label>
 
@@ -234,12 +234,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                     onClick={() => setPizzaCrust(crust.label as any)}
                     className={`w-full p-2.5 rounded-xl border text-left flex items-center justify-between transition-all cursor-pointer ${
                       pizzaCrust === crust.label
-                        ? 'bg-[#D97706]/15 border-[#D97706] text-[#EAB308] font-bold ring-1 ring-[#D97706]'
-                        : 'bg-[#221C18] border-white/10 text-[#A8A29E] hover:border-white/20'
+                        ? 'bg-[#E27D60]/15 border-[#E27D60] text-[#F8D8C8] font-bold ring-1 ring-[#E27D60]'
+                        : 'bg-[#2A231E] border-white/10 text-[#C4B8B0] hover:border-white/20'
                     }`}
                   >
                     <span className="text-xs">{crust.label.split(' (+')[0]}</span>
-                    <span className="text-xs font-bold text-[#EAB308]">{crust.price}</span>
+                    <span className="text-xs font-bold text-[#E27D60]">{crust.price}</span>
                   </motion.button>
                 ))}
               </div>
@@ -249,9 +249,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({
           {/* Option: Additional Extras */}
           {item.availableExtras && item.availableExtras.length > 0 && (
             <div className="space-y-2.5">
-              <label className="text-xs font-bold text-[#EAB308] uppercase tracking-wider flex items-center justify-between">
+              <label className="text-xs font-bold text-[#F8D8C8] uppercase tracking-wider flex items-center justify-between">
                 <span>➕ Deseja Adicionais?</span>
-                <span className="text-[11px] text-[#A8A29E] font-normal">Opcional</span>
+                <span className="text-[11px] text-[#C4B8B0] font-normal">Opcional</span>
               </label>
 
               <div className="space-y-2">
@@ -264,15 +264,15 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                       onClick={() => handleToggleExtra(extra)}
                       className={`p-2.5 rounded-xl border flex items-center justify-between transition-all cursor-pointer ${
                         isChecked
-                          ? 'bg-[#D97706]/15 border-[#D97706] text-[#FDFBF7]'
-                          : 'bg-[#221C18] border-white/10 text-[#A8A29E] hover:border-white/20'
+                          ? 'bg-[#E27D60]/15 border-[#E27D60] text-[#FFF8F3]'
+                          : 'bg-[#2A231E] border-white/10 text-[#C4B8B0] hover:border-white/20'
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
                         <div
                           className={`w-4 h-4 rounded flex items-center justify-center border ${
                             isChecked
-                              ? 'bg-[#D97706] border-[#D97706] text-black'
+                              ? 'bg-[#E27D60] border-[#E27D60] text-white'
                               : 'border-white/20 bg-black/40'
                           }`}
                         >
@@ -280,7 +280,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                         </div>
                         <span className="text-xs font-medium">{extra.name}</span>
                       </div>
-                      <span className="text-xs font-bold text-[#EAB308]">
+                      <span className="text-xs font-bold text-[#E27D60]">
                         + {formatCurrency(extra.price)}
                       </span>
                     </motion.div>
@@ -292,7 +292,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 
           {/* Observations Box */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-[#FDFBF7] uppercase tracking-wider">
+            <label className="text-xs font-bold text-[#FFF8F3] uppercase tracking-wider">
               📝 Observações Especiais:
             </label>
             <input
@@ -300,33 +300,33 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Ex: Sem cebola, molho à parte, bem tostado..."
-              className="w-full bg-[#0D0B0A] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-[#FDFBF7] placeholder:text-[#A8A29E]/50 focus:outline-none focus:border-[#D97706] transition-colors"
+              className="w-full bg-[#12100E] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-[#FFF8F3] placeholder:text-[#C4B8B0]/50 focus:outline-none focus:border-[#E27D60] transition-colors"
             />
           </div>
 
         </div>
 
         {/* Modal Footer (Quantity + Add to Cart CTA with feedback) */}
-        <div className="p-4 bg-[#0D0B0A] border-t border-white/10 flex items-center justify-between gap-4">
+        <div className="p-4 bg-[#12100E] border-t border-white/10 flex items-center justify-between gap-4">
           {/* Quantity selector */}
-          <div className="flex items-center bg-[#221C18] border border-white/10 rounded-xl p-1">
+          <div className="flex items-center bg-[#2A231E] border border-white/10 rounded-xl p-1">
             <motion.button
               type="button"
               whileTap={{ scale: 0.9 }}
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="w-8 h-8 rounded-lg bg-[#1A1614] hover:bg-[#221C18] text-[#FDFBF7] flex items-center justify-center cursor-pointer transition-colors"
+              className="w-8 h-8 rounded-lg bg-[#201B18] hover:bg-[#2A231E] text-[#FFF8F3] flex items-center justify-center cursor-pointer transition-colors"
               disabled={quantity <= 1 || isSubmitting}
             >
               <Minus className="w-3.5 h-3.5" />
             </motion.button>
-            <span className="w-8 text-center text-sm font-bold text-[#FDFBF7]">
+            <span className="w-8 text-center text-sm font-bold text-[#FFF8F3]">
               {quantity}
             </span>
             <motion.button
               type="button"
               whileTap={{ scale: 0.9 }}
               onClick={() => setQuantity(quantity + 1)}
-              className="w-8 h-8 rounded-lg bg-[#D97706] hover:bg-[#E65100] text-black flex items-center justify-center cursor-pointer transition-colors font-bold"
+              className="w-8 h-8 rounded-lg bg-gradient-to-r from-[#E27D60] to-[#D96B43] text-white flex items-center justify-center cursor-pointer transition-colors font-bold"
               disabled={isSubmitting}
             >
               <Plus className="w-3.5 h-3.5 stroke-[3]" />
@@ -340,16 +340,16 @@ export const ProductModal: React.FC<ProductModalProps> = ({
             whileTap={{ scale: isSubmitting || isSuccess ? 1 : 0.98 }}
             onClick={handleConfirm}
             disabled={isSubmitting || isSuccess}
-            className={`flex-1 inline-flex items-center justify-between font-bold text-xs uppercase tracking-wider py-3.5 px-4 rounded-xl shadow-xl transition-all cursor-pointer ${
+            className={`flex-1 inline-flex items-center justify-between font-bold text-xs uppercase tracking-wider py-3.5 px-4 rounded-xl shadow-xl transition-all cursor-pointer min-h-[44px] ${
               isSuccess 
                 ? 'bg-[#25D366] text-black' 
-                : 'bg-[#D97706] hover:bg-[#E65100] text-black'
+                : 'bg-gradient-to-r from-[#E27D60] to-[#D96B43] hover:from-[#D96B43] hover:to-[#C85932] text-white'
             }`}
           >
             <span className="flex items-center gap-2">
               {isSubmitting ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin text-black" />
+                  <Loader2 className="w-4 h-4 animate-spin text-white" />
                   <span>Adicionando...</span>
                 </>
               ) : isSuccess ? (
@@ -359,12 +359,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 </>
               ) : (
                 <>
-                  <ShoppingBag className="w-4 h-4 text-black" />
+                  <ShoppingBag className="w-4 h-4 text-white" />
                   <span>Adicionar ao Pedido</span>
                 </>
               )}
             </span>
-            <span className="bg-black/20 border border-black/30 px-2 py-0.5 rounded text-[11px] font-black">
+            <span className="bg-black/30 border border-black/30 px-2 py-0.5 rounded text-[11px] font-black">
               {formatCurrency(totalPrice)}
             </span>
           </motion.button>

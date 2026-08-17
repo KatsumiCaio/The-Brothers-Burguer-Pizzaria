@@ -2,12 +2,21 @@
 
 @layer base {
   :root {
+    --brand-terracotta: #E27D60;
+    --brand-terracotta-dark: #D96B43;
+    --brand-peach: #F8D8C8;
+    --brand-peach-light: #FEECE2;
+    --brand-dark-bg: #12100E;
+    --brand-dark-surface: #201B18;
+    --brand-dark-card: #2A231E;
+    --brand-text-primary: #FFF8F3;
+    --brand-text-muted: #C4B8B0;
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
   body {
-    background-color: #0D0B0A;
-    color: #FDFBF7;
+    background-color: #12100E;
+    color: #FFF8F3;
     overflow-x: hidden;
   }
 }
@@ -29,12 +38,13 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0D0B0A;
+  background: #12100E;
 }
 ::-webkit-scrollbar-thumb {
-  background: #221C18;
+  background: #2A231E;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D97706;
+  background: #E27D60;
 }
+

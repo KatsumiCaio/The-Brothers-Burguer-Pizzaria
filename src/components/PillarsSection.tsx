@@ -20,7 +20,6 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({
       actionLabel: 'Ver Hambúrgueres',
       categoryTarget: 'burguers',
       image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80',
-      accentColor: 'from-amber-600 to-orange-600'
     },
     {
       id: 'pillar-pizzas',
@@ -31,7 +30,6 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({
       actionLabel: 'Ver Pizzas',
       categoryTarget: 'pizzas',
       image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=600&q=80',
-      accentColor: 'from-yellow-600 to-amber-600'
     },
     {
       id: 'pillar-rodizio',
@@ -42,7 +40,6 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({
       actionLabel: 'Garantir Reserva',
       isReservation: true,
       image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80',
-      accentColor: 'from-orange-600 to-red-600'
     },
     {
       id: 'pillar-drinks',
@@ -53,25 +50,24 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({
       actionLabel: 'Ver Bebidas',
       categoryTarget: 'bebidas',
       image: 'https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=600&q=80',
-      accentColor: 'from-amber-500 to-yellow-600'
     }
   ];
 
   return (
-    <section id="destaques" className="py-20 bg-[#0D0B0A] relative border-b border-white/10">
+    <section id="destaques" className="py-20 bg-[#12100E] relative border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 bg-[#1A1614] border border-white/10 px-4 py-1.5 rounded-full text-xs font-bold text-[#EAB308] uppercase tracking-[0.2em]">
-            <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
+          <div className="inline-flex items-center gap-2 bg-[#201B18] border border-white/10 px-4 py-1.5 rounded-full text-xs font-bold text-[#F8D8C8] uppercase tracking-[0.2em]">
+            <Sparkles className="w-3.5 h-3.5 text-[#E27D60]" />
             <span>Nossa Identidade & Diferenciais</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif-display font-bold text-[#FDFBF7] tracking-tight">
-            Os 4 Pilares de Sabor da <span className="text-[#EAB308] italic">The Brothers</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif-display font-bold text-[#FFF8F3] tracking-tight">
+            Os 4 Pilares de Sabor da <span className="text-[#E27D60] italic">The Brothers</span>
           </h2>
-          <div className="h-[1px] w-16 bg-[#D97706] mx-auto my-2" />
-          <p className="text-[#A8A29E] text-sm sm:text-base font-sans-body">
+          <div className="h-[1px] w-16 bg-[#E27D60] mx-auto my-2" />
+          <p className="text-[#C4B8B0] text-sm sm:text-base font-sans-body">
             Tradição, paixão pelo preparo artesanal e o ambiente ideal para suas melhores confraternizações em Capão Bonito.
           </p>
         </div>
@@ -82,7 +78,7 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({
             <div
               key={pillar.id}
               id={pillar.id}
-              className="group relative bg-[#1A1614] hover:bg-[#221C18] border border-white/10 hover:border-[#D97706]/50 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-black/80 hover:-translate-y-1"
+              className="group relative bg-[#201B18] hover:bg-[#2A231E] border border-white/10 hover:border-[#E27D60]/50 rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-black/80 hover:-translate-y-1"
             >
               {/* Image Preview Container */}
               <div className="relative h-48 overflow-hidden bg-black/50">
@@ -91,7 +87,7 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({
                   alt={pillar.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/40" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#201B18] via-transparent to-black/40" />
                 
                 {/* Floating Icon Seal */}
                 <div className="absolute top-3 left-3 w-10 h-10 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-xl shadow-md">
@@ -99,7 +95,7 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({
                 </div>
 
                 {/* Badge */}
-                <div className="absolute top-3 right-3 bg-[#0D0B0A]/90 backdrop-blur-md border border-white/10 text-[#EAB308] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                <div className="absolute top-3 right-3 bg-[#12100E]/90 backdrop-blur-md border border-white/10 text-[#F8D8C8] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                   {pillar.badge}
                 </div>
               </div>
@@ -107,10 +103,10 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({
               {/* Card Body */}
               <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 className="text-lg font-serif-display font-bold text-[#FDFBF7] group-hover:text-[#EAB308] transition-colors">
+                  <h3 className="text-lg font-serif-display font-bold text-[#FFF8F3] group-hover:text-[#F8D8C8] transition-colors">
                     {pillar.title}
                   </h3>
-                  <p className="text-[#A8A29E] text-xs leading-relaxed mt-2.5">
+                  <p className="text-[#C4B8B0] text-xs leading-relaxed mt-2.5">
                     {pillar.description}
                   </p>
                 </div>
@@ -119,7 +115,7 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({
                 {pillar.isReservation ? (
                   <button
                     onClick={onOpenReservation}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#D97706] hover:bg-[#E65100] text-black font-bold text-xs uppercase tracking-widest py-3 px-4 rounded-xl transition-all cursor-pointer shadow-lg active:scale-95"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#E27D60] to-[#D96B43] hover:from-[#D96B43] hover:to-[#C85932] text-white font-bold text-xs uppercase tracking-widest py-3.5 px-4 min-h-[44px] rounded-xl transition-all cursor-pointer shadow-lg active:scale-95"
                   >
                     <span>{pillar.actionLabel}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -133,7 +129,7 @@ export const PillarsSection: React.FC<PillarsSectionProps> = ({
                         if (cardapioEl) cardapioEl.scrollIntoView({ behavior: 'smooth' });
                       }
                     }}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#221C18] hover:bg-[#2A231E] text-[#EAB308] hover:text-[#FDFBF7] border border-white/10 hover:border-[#D97706]/40 font-bold text-xs uppercase tracking-widest py-3 px-4 rounded-xl transition-all cursor-pointer active:scale-95"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-[#2A231E] hover:bg-[#342C26] text-[#F8D8C8] hover:text-[#FFF8F3] border border-white/10 hover:border-[#E27D60]/40 font-bold text-xs uppercase tracking-widest py-3.5 px-4 min-h-[44px] rounded-xl transition-all cursor-pointer active:scale-95"
                   >
                     <span>{pillar.actionLabel}</span>
                     <ArrowRight className="w-3.5 h-3.5" />

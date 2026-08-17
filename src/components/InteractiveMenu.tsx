@@ -75,9 +75,9 @@ const MenuItemImage: React.FC<{ src: string; alt: string }> = ({ src, alt }) => 
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <div className="relative w-full h-full bg-[#1A1614] overflow-hidden">
+    <div className="relative w-full h-full bg-[#201B18] overflow-hidden">
       {!isLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1614] via-[#26201C] to-[#1A1614] animate-pulse" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#201B18] via-[#2A231E] to-[#201B18] animate-pulse" />
       )}
       <img
         src={src}
@@ -118,7 +118,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
   };
 
   const renderCategoryIcon = (iconName: string, isSelected: boolean) => {
-    const className = `w-4 h-4 ${isSelected ? 'text-black' : 'text-[#D97706]'}`;
+    const className = `w-4 h-4 ${isSelected ? 'text-white' : 'text-[#E27D60]'}`;
     switch (iconName) {
       case 'Flame': return <Flame className={className} />;
       case 'UtensilsCrossed': return <UtensilsCrossed className={className} />;
@@ -170,11 +170,11 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
   };
 
   return (
-    <section id="cardapio" className="py-20 bg-[#0D0B0A] relative scroll-mt-20 border-b border-white/10">
+    <section id="cardapio" className="py-20 bg-[#12100E] relative scroll-mt-20 border-b border-white/10">
       
       {/* Background ambient lighting */}
-      <div className="absolute top-1/3 left-0 w-96 h-96 bg-[#D97706]/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-10 right-0 w-96 h-96 bg-[#E65100]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/3 left-0 w-96 h-96 bg-[#E27D60]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-10 right-0 w-96 h-96 bg-[#D96B43]/5 blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -186,30 +186,30 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="text-center max-w-3xl mx-auto mb-10 space-y-3"
         >
-          <div className="inline-flex items-center gap-2 bg-[#1A1614] border border-white/10 px-4 py-1.5 rounded-full text-xs font-bold text-[#EAB308] uppercase tracking-[0.2em]">
-            <UtensilsCrossed className="w-3.5 h-3.5 text-[#D97706]" />
+          <div className="inline-flex items-center gap-2 bg-[#201B18] border border-white/10 px-4 py-1.5 rounded-full text-xs font-bold text-[#F8D8C8] uppercase tracking-[0.2em]">
+            <UtensilsCrossed className="w-3.5 h-3.5 text-[#E27D60]" />
             <span>Cardápio Digital Oficial</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif-display font-bold text-[#FDFBF7] tracking-tight">
-            Escolha Seus Pratos & <span className="text-[#EAB308] italic">Monte Seu Pedido</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif-display font-bold text-[#FFF8F3] tracking-tight">
+            Escolha Seus Pratos & <span className="text-[#E27D60] italic">Monte Seu Pedido</span>
           </h2>
           
-          <div className="h-[1px] w-16 bg-[#D97706] mx-auto my-2" />
+          <div className="h-[1px] w-16 bg-[#E27D60] mx-auto my-2" />
 
-          <p className="text-[#A8A29E] text-sm sm:text-base font-sans-body">
+          <p className="text-[#C4B8B0] text-sm sm:text-base font-sans-body">
             Personalize seu burger (pão crocante ou brioche) ou monte sua pizza artesanal (até 2 sabores e borda vulcão) e envie direto para o WhatsApp!
           </p>
 
           {/* Search Bar */}
           <div className="mt-6 max-w-md mx-auto relative">
-            <Search className="w-4 h-4 text-[#A8A29E] absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#C4B8B0] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Buscar por lanche, pizza, sabor ou ingrediente..."
-              className="w-full bg-[#1A1614] border border-white/10 focus:border-[#D97706] rounded-2xl pl-10 pr-20 py-3 text-xs sm:text-sm text-[#FDFBF7] placeholder:text-[#A8A29E]/60 focus:outline-none transition-all shadow-inner"
+              className="w-full bg-[#201B18] border border-white/10 focus:border-[#E27D60] rounded-2xl pl-10 pr-20 py-3 text-xs sm:text-sm text-[#FFF8F3] placeholder:text-[#C4B8B0]/60 focus:outline-none transition-all shadow-inner"
             />
             <AnimatePresence>
               {searchQuery && (
@@ -218,7 +218,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A8A29E] hover:text-[#FDFBF7] text-xs px-2.5 py-1 bg-[#221C18] border border-white/10 rounded-md font-bold uppercase tracking-wider cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#C4B8B0] hover:text-[#FFF8F3] text-xs px-2.5 py-1 bg-[#2A231E] border border-white/10 rounded-md font-bold uppercase tracking-wider cursor-pointer"
                 >
                   Limpar
                 </motion.button>
@@ -238,16 +238,16 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                   onClick={() => handleCategorySwitch(cat.id)}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.96 }}
-                  className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-colors duration-200 cursor-pointer border ${
+                  className={`relative flex items-center gap-2 px-4 py-2.5 min-h-[44px] rounded-xl text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-colors duration-200 cursor-pointer border ${
                     isSelected
-                      ? 'border-[#D97706] text-black shadow-lg shadow-black/60'
-                      : 'bg-[#1A1614] text-[#A8A29E] hover:text-[#FDFBF7] border-white/10 hover:border-white/20'
+                      ? 'border-[#E27D60] text-white shadow-lg shadow-[#E27D60]/20'
+                      : 'bg-[#201B18] text-[#C4B8B0] hover:text-[#F8D8C8] border-white/10 hover:border-[#E27D60]/30'
                   }`}
                 >
                   {isSelected && (
                     <motion.div
                       layoutId="activeCategoryPill"
-                      className="absolute inset-0 bg-[#D97706] rounded-xl -z-10"
+                      className="absolute inset-0 bg-gradient-to-r from-[#E27D60] to-[#D96B43] rounded-xl -z-10"
                       transition={{ type: 'spring', stiffness: 450, damping: 32 }}
                     />
                   )}
@@ -268,9 +268,9 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="mb-6 flex items-center justify-between text-xs text-[#A8A29E] bg-[#1A1614] p-3 rounded-xl border border-white/10 overflow-hidden"
+              className="mb-6 flex items-center justify-between text-xs text-[#C4B8B0] bg-[#201B18] p-3 rounded-xl border border-white/10 overflow-hidden"
             >
-              <span>Resultados para: <strong className="text-[#EAB308]">"{searchQuery}"</strong></span>
+              <span>Resultados para: <strong className="text-[#F8D8C8]">"{searchQuery}"</strong></span>
               <span>{filteredItems.length} item(ns) encontrado(s)</span>
             </motion.div>
           )}
@@ -281,13 +281,13 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
           <div className="space-y-12 mb-10">
             
             {/* Section Sub-Header */}
-            <div className="bg-[#1A1614] border border-white/10 rounded-2xl p-6 sm:p-8 text-center max-w-4xl mx-auto space-y-2 relative overflow-hidden">
-              <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-[#D97706]/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="bg-[#201B18] border border-white/10 rounded-2xl p-6 sm:p-8 text-center max-w-4xl mx-auto space-y-2 relative overflow-hidden">
+              <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-[#E27D60]/10 rounded-full blur-3xl pointer-events-none" />
               <span className="text-2xl">🍕</span>
-              <h3 className="text-2xl sm:text-3xl font-serif-display font-bold text-[#FDFBF7]">
+              <h3 className="text-2xl sm:text-3xl font-serif-display font-bold text-[#FFF8F3]">
                 Pizzas dos Brothers
               </h3>
-              <p className="text-xs sm:text-sm text-[#A8A29E] max-w-2xl mx-auto">
+              <p className="text-xs sm:text-sm text-[#C4B8B0] max-w-2xl mx-auto">
                 Escolha o tamanho da sua pizza (Grande de 8 fatias com até 2 sabores ou Broto de 4 fatias com 1 sabor), selecione seus sabores favoritos e adicione Borda Vulcão recheada!
               </p>
             </div>
@@ -299,7 +299,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
               <motion.div
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
                 onClick={() => onOpenPizzaModal('grande')}
-                className="bg-[#1A1614] hover:bg-[#221C18] border border-white/10 hover:border-[#D97706]/50 rounded-3xl overflow-hidden shadow-2xl transition-all flex flex-col justify-between cursor-pointer group"
+                className="bg-[#201B18] hover:bg-[#2A231E] border border-white/10 hover:border-[#E27D60]/50 rounded-3xl overflow-hidden shadow-2xl transition-all flex flex-col justify-between cursor-pointer group"
               >
                 <div className="relative h-56 sm:h-64 overflow-hidden bg-black">
                   <img 
@@ -307,22 +307,22 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                     alt="Pizza Grande"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-black/20 to-black/40" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#201B18] via-black/20 to-black/40" />
                   
                   <div className="absolute top-4 left-4 flex gap-2">
-                    <span className="bg-[#D97706] text-black font-extrabold text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
+                    <span className="bg-gradient-to-r from-[#E27D60] to-[#D96B43] text-white font-extrabold text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
                       🔥 Mais Pedida
                     </span>
-                    <span className="bg-black/80 backdrop-blur-md border border-white/10 text-[#EAB308] font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">
+                    <span className="bg-black/80 backdrop-blur-md border border-white/10 text-[#F8D8C8] font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">
                       8 Fatias
                     </span>
                   </div>
 
                   <div className="absolute bottom-4 left-4 right-4">
-                    <h4 className="text-2xl sm:text-3xl font-serif-display font-bold text-[#FDFBF7]">
+                    <h4 className="text-2xl sm:text-3xl font-serif-display font-bold text-[#FFF8F3]">
                       GRANDE
                     </h4>
-                    <p className="text-xs sm:text-sm text-[#EAB308] font-medium mt-0.5">
+                    <p className="text-xs sm:text-sm text-[#F8D8C8] font-medium mt-0.5">
                       Pizza com até 8 fatias e 2 sabores (1/2 a 1/2)
                     </p>
                   </div>
@@ -330,24 +330,24 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
 
                 <div className="p-5 sm:p-6 space-y-4 flex-1 flex flex-col justify-between">
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-xs text-[#A8A29E]">
+                    <div className="flex items-center gap-2 text-xs text-[#C4B8B0]">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]" />
                       <span>Aceita até 2 sabores divididos meio a meio</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-[#A8A29E]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#D97706]" />
+                    <div className="flex items-center gap-2 text-xs text-[#C4B8B0]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#E27D60]" />
                       <span>Opção de Borda Vulcão Catupiry ou Cheddar</span>
                     </div>
                   </div>
 
                   <div className="pt-4 border-t border-white/5 flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] text-[#A8A29E] uppercase font-bold tracking-wider">A partir de</span>
-                      <p className="text-xl font-bold text-[#EAB308]">R$ 55,00</p>
+                      <span className="text-[10px] text-[#C4B8B0] uppercase font-bold tracking-wider">A partir de</span>
+                      <p className="text-xl font-bold text-[#E27D60]">R$ 55,00</p>
                     </div>
                     <motion.button
                       whileTap={{ scale: 0.95 }}
-                      className="bg-[#D97706] hover:bg-[#E65100] text-black text-xs font-bold uppercase tracking-wider px-5 py-3 rounded-xl shadow-lg flex items-center gap-1.5 transition-colors"
+                      className="bg-gradient-to-r from-[#E27D60] to-[#D96B43] hover:from-[#D96B43] hover:to-[#C85932] text-white text-xs font-bold uppercase tracking-wider px-5 py-3 rounded-xl shadow-lg flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <span>Montar Grande</span>
                       <ChevronRight className="w-4 h-4" />
@@ -360,7 +360,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
               <motion.div
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
                 onClick={() => onOpenPizzaModal('broto')}
-                className="bg-[#1A1614] hover:bg-[#221C18] border border-white/10 hover:border-[#D97706]/50 rounded-3xl overflow-hidden shadow-2xl transition-all flex flex-col justify-between cursor-pointer group"
+                className="bg-[#201B18] hover:bg-[#2A231E] border border-white/10 hover:border-[#E27D60]/50 rounded-3xl overflow-hidden shadow-2xl transition-all flex flex-col justify-between cursor-pointer group"
               >
                 <div className="relative h-56 sm:h-64 overflow-hidden bg-black">
                   <img 
@@ -368,22 +368,22 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                     alt="Pizza Broto"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-black/20 to-black/40" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#201B18] via-black/20 to-black/40" />
                   
                   <div className="absolute top-4 left-4 flex gap-2">
-                    <span className="bg-[#221C18] border border-white/20 text-[#FDFBF7] font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">
+                    <span className="bg-[#2A231E] border border-white/20 text-[#FFF8F3] font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">
                       Individual
                     </span>
-                    <span className="bg-black/80 backdrop-blur-md border border-white/10 text-[#EAB308] font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">
+                    <span className="bg-black/80 backdrop-blur-md border border-white/10 text-[#F8D8C8] font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">
                       4 Fatias
                     </span>
                   </div>
 
                   <div className="absolute bottom-4 left-4 right-4">
-                    <h4 className="text-2xl sm:text-3xl font-serif-display font-bold text-[#FDFBF7]">
+                    <h4 className="text-2xl sm:text-3xl font-serif-display font-bold text-[#FFF8F3]">
                       BROTO
                     </h4>
-                    <p className="text-xs sm:text-sm text-[#EAB308] font-medium mt-0.5">
+                    <p className="text-xs sm:text-sm text-[#F8D8C8] font-medium mt-0.5">
                       Pizza com até 4 fatias e 1 sabor individual
                     </p>
                   </div>
@@ -391,24 +391,24 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
 
                 <div className="p-5 sm:p-6 space-y-4 flex-1 flex flex-col justify-between">
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-xs text-[#A8A29E]">
+                    <div className="flex items-center gap-2 text-xs text-[#C4B8B0]">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]" />
                       <span>Porção ideal individual de 4 fatias crocantes</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-[#A8A29E]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#D97706]" />
+                    <div className="flex items-center gap-2 text-xs text-[#C4B8B0]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#E27D60]" />
                       <span>Opção de Borda Vulcão Catupiry ou Cheddar</span>
                     </div>
                   </div>
 
                   <div className="pt-4 border-t border-white/5 flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] text-[#A8A29E] uppercase font-bold tracking-wider">A partir de</span>
-                      <p className="text-xl font-bold text-[#EAB308]">R$ 35,00</p>
+                      <span className="text-[10px] text-[#C4B8B0] uppercase font-bold tracking-wider">A partir de</span>
+                      <p className="text-xl font-bold text-[#E27D60]">R$ 35,00</p>
                     </div>
                     <motion.button
                       whileTap={{ scale: 0.95 }}
-                      className="bg-[#D97706] hover:bg-[#E65100] text-black text-xs font-bold uppercase tracking-wider px-5 py-3 rounded-xl shadow-lg flex items-center gap-1.5 transition-colors"
+                      className="bg-gradient-to-r from-[#E27D60] to-[#D96B43] hover:from-[#D96B43] hover:to-[#C85932] text-white text-xs font-bold uppercase tracking-wider px-5 py-3 rounded-xl shadow-lg flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <span>Montar Broto</span>
                       <ChevronRight className="w-4 h-4" />
@@ -424,13 +424,13 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
               
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
                 <div>
-                  <h4 className="text-xl font-serif-display font-bold text-[#FDFBF7] flex items-center gap-2">
+                  <h4 className="text-xl font-serif-display font-bold text-[#FFF8F3] flex items-center gap-2">
                     <span>Cardápio de Sabores</span>
-                    <span className="text-xs font-normal text-[#A8A29E] bg-[#1A1614] px-2.5 py-1 rounded-full border border-white/10">
+                    <span className="text-xs font-normal text-[#C4B8B0] bg-[#201B18] px-2.5 py-1 rounded-full border border-white/10">
                       26 Opções Disponíveis
                     </span>
                   </h4>
-                  <p className="text-xs text-[#A8A29E] mt-0.5">
+                  <p className="text-xs text-[#C4B8B0] mt-0.5">
                     Clique em qualquer sabor para montar na Pizza Grande ou no Broto
                   </p>
                 </div>
@@ -448,8 +448,8 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                       onClick={() => setPizzaFlavorFilter(tab.id as any)}
                       className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer whitespace-nowrap border ${
                         pizzaFlavorFilter === tab.id
-                          ? 'bg-[#D97706]/20 border-[#D97706] text-[#EAB308]'
-                          : 'bg-[#1A1614] border-white/10 text-[#A8A29E] hover:text-[#FDFBF7]'
+                          ? 'bg-[#E27D60]/20 border-[#E27D60] text-[#F8D8C8]'
+                          : 'bg-[#201B18] border-white/10 text-[#C4B8B0] hover:text-[#FFF8F3]'
                       }`}
                     >
                       {tab.label}
@@ -465,7 +465,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                     key={flavor.id}
                     whileHover={{ y: -3, transition: { duration: 0.15 } }}
                     onClick={() => onOpenPizzaModal('grande', flavor.id)}
-                    className="bg-[#1A1614] hover:bg-[#221C18] border border-white/10 hover:border-[#D97706]/40 p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between gap-3 group"
+                    className="bg-[#201B18] hover:bg-[#2A231E] border border-white/10 hover:border-[#E27D60]/40 p-4 rounded-2xl transition-all cursor-pointer flex flex-col justify-between gap-3 group"
                   >
                     <div className="flex items-start gap-3">
                       <img 
@@ -475,7 +475,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                       />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <h5 className="font-bold text-xs sm:text-sm text-[#FDFBF7] group-hover:text-[#EAB308] transition-colors truncate uppercase">
+                          <h5 className="font-bold text-xs sm:text-sm text-[#FFF8F3] group-hover:text-[#F8D8C8] transition-colors truncate uppercase">
                             {flavor.name}
                           </h5>
                           {flavor.category === 'doce' && (
@@ -484,7 +484,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                             </span>
                           )}
                         </div>
-                        <p className="text-[11px] text-[#A8A29E] line-clamp-2 mt-1 leading-snug">
+                        <p className="text-[11px] text-[#C4B8B0] line-clamp-2 mt-1 leading-snug">
                           {flavor.description}
                         </p>
                       </div>
@@ -492,15 +492,15 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
 
                     <div className="pt-2 border-t border-white/5 flex items-center justify-between text-xs">
                       <div className="flex items-center gap-3">
-                        <span className="text-[#A8A29E] text-[11px]">
-                          Broto: <strong className="text-[#FDFBF7]">{formatCurrency(flavor.priceBroto)}</strong>
+                        <span className="text-[#C4B8B0] text-[11px]">
+                          Broto: <strong className="text-[#FFF8F3]">{formatCurrency(flavor.priceBroto)}</strong>
                         </span>
-                        <span className="text-[#A8A29E] text-[11px]">
-                          Grande: <strong className="text-[#EAB308]">{formatCurrency(flavor.priceGrande)}</strong>
+                        <span className="text-[#C4B8B0] text-[11px]">
+                          Grande: <strong className="text-[#E27D60]">{formatCurrency(flavor.priceGrande)}</strong>
                         </span>
                       </div>
 
-                      <span className="text-[11px] text-[#D97706] font-bold group-hover:underline flex items-center gap-1">
+                      <span className="text-[11px] text-[#E27D60] font-bold group-hover:underline flex items-center gap-1">
                         <span>Escolher</span>
                         <ChevronRight className="w-3 h-3" />
                       </span>
@@ -537,7 +537,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                     id={`card-${item.id}`}
                     variants={cardItemVariants}
                     whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                    className="bg-[#1A1614] hover:bg-[#221C18] border border-white/10 hover:border-[#D97706]/40 rounded-2xl overflow-hidden transition-colors duration-300 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-black/80 group"
+                    className="bg-[#201B18] hover:bg-[#2A231E] border border-white/10 hover:border-[#E27D60]/40 rounded-2xl overflow-hidden transition-colors duration-300 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-black/80 group"
                   >
                       
                       {/* Top Image Container */}
@@ -547,11 +547,11 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                       >
                         <MenuItemImage src={item.image} alt={item.name} />
                         
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/30 pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#201B18] via-transparent to-black/30 pointer-events-none" />
 
                         {/* Product Badge */}
                         {item.badge && (
-                          <div className="absolute top-3 left-3 bg-[#0D0B0A]/90 backdrop-blur-md border border-white/10 text-[#EAB308] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
+                          <div className="absolute top-3 left-3 bg-[#12100E]/90 backdrop-blur-md border border-white/10 text-[#F8D8C8] text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
                             {item.badge}
                           </div>
                         )}
@@ -559,12 +559,12 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                         {/* Special Features Badges */}
                         <div className="absolute bottom-3 left-3 flex flex-wrap gap-1.5">
                           {item.allowsBreadChoice && (
-                            <span className="bg-black/80 backdrop-blur-sm border border-white/10 text-[#EAB308] text-[10px] font-semibold px-2.5 py-0.5 rounded-md">
+                            <span className="bg-black/80 backdrop-blur-sm border border-white/10 text-[#F8D8C8] text-[10px] font-semibold px-2.5 py-0.5 rounded-md">
                               🥖 Pão Francês / Brioche
                             </span>
                           )}
                           {item.allowsCrustChoice && (
-                            <span className="bg-black/80 backdrop-blur-sm border border-white/10 text-[#EAB308] text-[10px] font-semibold px-2.5 py-0.5 rounded-md">
+                            <span className="bg-black/80 backdrop-blur-sm border border-white/10 text-[#F8D8C8] text-[10px] font-semibold px-2.5 py-0.5 rounded-md">
                               🍕 Borda Vulcão
                             </span>
                           )}
@@ -577,13 +577,13 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                           <div className="flex items-start justify-between gap-2">
                             <h3 
                               onClick={() => handleCardClick(item)}
-                              className="font-serif-display font-bold text-base sm:text-lg text-[#FDFBF7] group-hover:text-[#EAB308] transition-colors cursor-pointer leading-snug"
+                              className="font-serif-display font-bold text-base sm:text-lg text-[#FFF8F3] group-hover:text-[#F8D8C8] transition-colors cursor-pointer leading-snug"
                             >
                               {item.name}
                             </h3>
                           </div>
 
-                          <p className="text-[#A8A29E] text-xs leading-relaxed mt-2 line-clamp-3">
+                          <p className="text-[#C4B8B0] text-xs leading-relaxed mt-2 line-clamp-3">
                             {item.description}
                           </p>
                         </div>
@@ -591,8 +591,8 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                         {/* Price and Add Button */}
                         <div className="pt-3 border-t border-white/5 flex items-center justify-between gap-3">
                           <div>
-                            <span className="text-[10px] text-[#A8A29E] uppercase font-bold tracking-wider">Valor</span>
-                            <p className="text-lg font-bold text-[#EAB308]">
+                            <span className="text-[10px] text-[#C4B8B0] uppercase font-bold tracking-wider">Valor</span>
+                            <p className="text-lg font-bold text-[#E27D60]">
                               {formatCurrency(item.price)}
                             </p>
                           </div>
@@ -602,7 +602,7 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                               whileHover={{ scale: 1.03 }}
                               whileTap={{ scale: 0.95 }}
                               onClick={() => handleCardClick(item)}
-                              className="inline-flex items-center gap-1.5 bg-[#D97706] hover:bg-[#E65100] text-black text-xs font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl shadow-lg transition-colors cursor-pointer"
+                              className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#E27D60] to-[#D96B43] hover:from-[#D96B43] hover:to-[#C85932] text-white text-xs font-bold uppercase tracking-wider py-2.5 px-4 min-h-[44px] rounded-xl shadow-lg transition-colors cursor-pointer"
                             >
                               <Plus className="w-3.5 h-3.5 stroke-[3]" />
                               <span>{isPizzaItem ? 'Montar Pizza' : 'Montar / Pedir'}</span>
@@ -612,12 +612,12 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                               whileHover={{ scale: 1.03 }}
                               whileTap={{ scale: 0.95 }}
                               onClick={() => handleAddWithFeedback(item)}
-                              className={`inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl shadow-lg transition-all cursor-pointer ${
+                              className={`inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider py-2.5 px-4 min-h-[44px] rounded-xl shadow-lg transition-all cursor-pointer ${
                                 isJustAdded
                                   ? 'bg-[#25D366] text-black ring-2 ring-[#25D366]/50'
                                   : hasAdded
                                   ? 'bg-[#25D366] text-black'
-                                  : 'bg-[#D97706] hover:bg-[#E65100] text-black'
+                                  : 'bg-gradient-to-r from-[#E27D60] to-[#D96B43] hover:from-[#D96B43] hover:to-[#C85932] text-white'
                               }`}
                             >
                               <AnimatePresence mode="wait">
@@ -672,15 +672,15 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-center py-16 bg-[#1A1614] rounded-2xl border border-white/10 p-8"
+            className="text-center py-16 bg-[#201B18] rounded-2xl border border-white/10 p-8"
           >
-            <p className="text-[#FDFBF7] font-bold text-base">Nenhum item encontrado com esses termos.</p>
-            <p className="text-[#A8A29E] text-xs mt-1">Tente pesquisar por hambúrguer, pizza, calabresa, chopp ou limpe a busca.</p>
+            <p className="text-[#FFF8F3] font-bold text-base">Nenhum item encontrado com esses termos.</p>
+            <p className="text-[#C4B8B0] text-xs mt-1">Tente pesquisar por hambúrguer, pizza, calabresa, chopp ou limpe a busca.</p>
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
               onClick={() => setSearchQuery('')}
-              className="mt-4 bg-[#D97706] hover:bg-[#E65100] text-black text-xs font-bold uppercase tracking-widest px-5 py-2.5 rounded-xl cursor-pointer"
+              className="mt-4 bg-gradient-to-r from-[#E27D60] to-[#D96B43] text-white text-xs font-bold uppercase tracking-widest px-5 py-2.5 rounded-xl cursor-pointer"
             >
               Ver Cardápio Completo
             </motion.button>

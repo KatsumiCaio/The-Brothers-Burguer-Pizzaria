@@ -33,15 +33,15 @@ export class ErrorBoundary extends React.Component<Props, State> {
   public render(): ReactNode {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-[#0D0B0A] text-[#FDFBF7] flex items-center justify-center p-6">
-          <div className="bg-[#1A1614] border border-white/10 rounded-3xl p-8 max-w-md w-full text-center space-y-6 shadow-2xl">
-            <div className="w-16 h-16 rounded-full bg-[#EAB308]/10 border border-[#EAB308]/20 flex items-center justify-center mx-auto text-[#EAB308]">
+        <div className="min-h-screen bg-[#12100E] text-[#FFF8F3] flex items-center justify-center p-6">
+          <div className="bg-[#201B18] border border-white/10 rounded-3xl p-8 max-w-md w-full text-center space-y-6 shadow-2xl">
+            <div className="w-16 h-16 rounded-full bg-[#E27D60]/10 border border-[#E27D60]/20 flex items-center justify-center mx-auto text-[#E27D60]">
               <AlertTriangle className="w-8 h-8" />
             </div>
 
             <div className="space-y-2">
-              <h2 className="text-xl font-bold font-serif text-[#FDFBF7]">Ops! Algo inesperado aconteceu.</h2>
-              <p className="text-xs text-[#A8A29E] leading-relaxed">
+              <h2 className="text-xl font-bold font-serif text-[#FFF8F3]">Ops! Algo inesperado aconteceu.</h2>
+              <p className="text-xs text-[#C4B8B0] leading-relaxed">
                 Nosso sistema de observabilidade registrou o incidente. Você pode recarregar a página ou fazer seu pedido diretamente pelo WhatsApp.
               </p>
             </div>
@@ -49,7 +49,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
             <div className="flex flex-col gap-3 pt-2">
               <button
                 onClick={this.handleReload}
-                className="w-full inline-flex items-center justify-center gap-2 bg-[#D97706] hover:bg-[#E65100] text-black font-bold text-xs uppercase tracking-widest py-3.5 px-4 rounded-xl shadow-lg transition-all cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#E27D60] to-[#D96B43] hover:from-[#D96B43] hover:to-[#C85932] text-white font-bold text-xs uppercase tracking-widest py-3.5 px-4 rounded-xl shadow-lg transition-all cursor-pointer min-h-[44px]"
               >
                 <RefreshCw className="w-4 h-4" />
                 <span>Recarregar Cardápio</span>
@@ -59,7 +59,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
                 href={`https://wa.me/${RESTAURANT_INFO.whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 bg-[#25D366] text-black font-bold text-xs uppercase tracking-widest py-3 px-4 rounded-xl shadow-md"
+                className="w-full inline-flex items-center justify-center gap-2 bg-[#25D366] text-black font-bold text-xs uppercase tracking-widest py-3 px-4 rounded-xl shadow-md min-h-[44px]"
               >
                 <Phone className="w-4 h-4" />
                 <span>Falar no WhatsApp ({RESTAURANT_INFO.whatsappFormatted})</span>

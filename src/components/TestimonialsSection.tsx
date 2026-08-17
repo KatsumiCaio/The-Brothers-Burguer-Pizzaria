@@ -4,41 +4,41 @@ import { REVIEWS_DATA, RESTAURANT_INFO } from '../data/menuData';
 
 export const TestimonialsSection: React.FC = () => {
   return (
-    <section id="avaliacoes" className="py-20 bg-[#0D0B0A] relative border-b border-white/10">
+    <section id="avaliacoes" className="py-20 bg-[#12100E] relative border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header with Google Badge */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 bg-[#1A1614] border border-white/10 px-4 py-1.5 rounded-full text-xs font-bold text-[#EAB308] uppercase tracking-[0.2em]">
-              <MessageSquare className="w-3.5 h-3.5 text-[#D97706]" />
+            <div className="inline-flex items-center gap-2 bg-[#201B18] border border-white/10 px-4 py-1.5 rounded-full text-xs font-bold text-[#F8D8C8] uppercase tracking-[0.2em]">
+              <MessageSquare className="w-3.5 h-3.5 text-[#E27D60]" />
               <span>Experiência & Prova Social</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif-display font-bold text-[#FDFBF7] tracking-tight">
-              O Que Dizem Nossos <span className="text-[#EAB308] italic">Clientes</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif-display font-bold text-[#FFF8F3] tracking-tight">
+              O Que Dizem Nossos <span className="text-[#E27D60] italic">Clientes</span>
             </h2>
             
-            <div className="h-[1px] w-16 bg-[#D97706]" />
+            <div className="h-[1px] w-16 bg-[#E27D60]" />
 
-            <p className="text-[#A8A29E] text-sm sm:text-base font-sans-body">
+            <p className="text-[#C4B8B0] text-sm sm:text-base font-sans-body">
               Avaliações reais de quem frequenta e pede na The Brothers em Capão Bonito/SP.
             </p>
           </div>
 
           {/* Google Score Card */}
-          <div className="bg-[#1A1614] border border-white/10 p-5 rounded-2xl flex items-center gap-4 flex-shrink-0 shadow-xl">
-            <div className="w-12 h-12 rounded-xl bg-[#D97706] flex items-center justify-center text-black font-black text-xl shadow-md">
+          <div className="bg-[#201B18] border border-white/10 p-5 rounded-2xl flex items-center gap-4 flex-shrink-0 shadow-xl">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#E27D60] to-[#D96B43] flex items-center justify-center text-white font-black text-xl shadow-md">
               {RESTAURANT_INFO.rating}
             </div>
             <div>
-              <div className="flex text-[#EAB308]">
+              <div className="flex text-[#E27D60]">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-[#EAB308] text-[#EAB308]" />
+                  <Star key={i} className="w-4 h-4 fill-[#E27D60] text-[#E27D60]" />
                 ))}
               </div>
-              <p className="text-xs font-bold text-[#FDFBF7] mt-1">Google Maps Reviews</p>
-              <span className="text-[11px] text-[#A8A29E]">{RESTAURANT_INFO.reviewsCount} avaliações verificadas</span>
+              <p className="text-xs font-bold text-[#FFF8F3] mt-1">Google Maps Reviews</p>
+              <span className="text-[11px] text-[#C4B8B0]">{RESTAURANT_INFO.reviewsCount} avaliações verificadas</span>
             </div>
           </div>
         </div>
@@ -48,26 +48,26 @@ export const TestimonialsSection: React.FC = () => {
           {REVIEWS_DATA.map((review) => (
             <div
               key={review.id}
-              className="bg-[#1A1614] hover:bg-[#221C18] border border-white/5 hover:border-[#D97706]/40 p-6 rounded-2xl flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-black/80 relative group"
+              className="bg-[#201B18] hover:bg-[#2A231E] border border-white/5 hover:border-[#E27D60]/40 p-6 rounded-2xl flex flex-col justify-between transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-black/80 relative group"
             >
               {/* Top Rating & Quote Icon */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex text-[#EAB308]">
+                  <div className="flex text-[#E27D60]">
                     {[...Array(review.rating)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-[#EAB308] text-[#EAB308]" />
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#E27D60] text-[#E27D60]" />
                     ))}
                   </div>
-                  <Quote className="w-6 h-6 text-[#D97706]/20 group-hover:text-[#D97706]/40 transition-colors" />
+                  <Quote className="w-6 h-6 text-[#E27D60]/20 group-hover:text-[#E27D60]/40 transition-colors" />
                 </div>
 
                 {review.highlight && (
-                  <p className="text-xs font-bold text-[#EAB308] italic">
+                  <p className="text-xs font-bold text-[#F8D8C8] italic">
                     "{review.highlight}"
                   </p>
                 )}
 
-                <p className="text-[#A8A29E] text-xs sm:text-sm leading-relaxed">
+                <p className="text-[#C4B8B0] text-xs sm:text-sm leading-relaxed">
                   "{review.comment}"
                 </p>
               </div>
@@ -75,12 +75,12 @@ export const TestimonialsSection: React.FC = () => {
               {/* Author Info */}
               <div className="pt-4 mt-4 border-t border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-[#221C18] border border-white/10 flex items-center justify-center text-xs font-bold text-[#EAB308]">
+                  <div className="w-8 h-8 rounded-full bg-[#2A231E] border border-white/10 flex items-center justify-center text-xs font-bold text-[#F8D8C8]">
                     {review.name.charAt(0)}
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#FDFBF7]">{review.name}</h4>
-                    <span className="text-[10px] text-[#A8A29E]">{review.location}</span>
+                    <h4 className="text-xs font-bold text-[#FFF8F3]">{review.name}</h4>
+                    <span className="text-[10px] text-[#C4B8B0]">{review.location}</span>
                   </div>
                 </div>
 
