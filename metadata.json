@@ -1,0 +1,6 @@
+{
+  "name": "The Brothers Burguer e Pizzaria",
+  "description": "Cardápio digital interativo e landing page de alta conversão para The Brothers Burguer e Pizzaria em Capão Bonito/SP com pedidos via WhatsApp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,192 @@
+import React from 'react';
+import { Star, MapPin, Sparkles, Flame, ArrowRight, Utensils, Beer, Clock, ShieldCheck } from 'lucide-react';
+import { RESTAURANT_INFO } from '../data/menuData';
+
+interface HeroProps {
+  onExploreMenu: () => void;
+  onOpenReservation: () => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onOpenReservation }) => {
+  return (
+    <section id="hero" className="relative min-h-[88vh] flex items-center overflow-hidden bg-[#0D0B0A] pt-8 pb-16 lg:py-20 border-b border-white/10">
+      {/* Ambient background glow effects */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#D97706]/10 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-[#E65100]/10 blur-[120px] rounded-full pointer-events-none" />
+
+      {/* Subtle background overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(#D97706 1px, transparent 1px)`,
+          backgroundSize: '24px 24px'
+        }}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+          
+          {/* Left Column: Editorial Headlines & CTAs (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6">
+            
+            {/* Social Proof & Location Badges */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
+              <div className="inline-flex items-center gap-2 bg-[#1A1614] border border-white/10 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#FDFBF7] shadow-sm">
+                <span className="text-[#EAB308]">⭐ 4.8/5.0</span>
+                <span className="text-[#A8A29E] font-normal">+47 avaliações no Google</span>
+              </div>
+
+              <div className="inline-flex items-center gap-1.5 bg-[#1A1614] border border-white/10 px-3.5 py-1.5 rounded-full text-xs font-medium text-[#A8A29E]">
+                <MapPin className="w-3.5 h-3.5 text-[#D97706]" />
+                <span>Capão Bonito, SP</span>
+              </div>
+            </div>
+
+            {/* Main Headline with Georgia / Playfair Serif Styling */}
+            <div>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif-display italic text-[#EAB308] leading-tight tracking-tight">
+                The Brothers
+              </h1>
+              <p className="text-xl sm:text-2xl md:text-3xl font-serif-display italic text-[#FDFBF7] opacity-90 mt-1">
+                Burguer & Pizzaria Artesanal
+              </p>
+            </div>
+
+            {/* Accent Divider Line */}
+            <div className="h-[1px] w-16 bg-[#D97706] my-2" />
+
+            {/* Subheadline */}
+            <p className="text-[#A8A29E] text-base sm:text-lg max-w-2xl leading-relaxed font-sans-body">
+              O ponto certo do hambúrguer artesanal no <strong className="text-[#FDFBF7] font-semibold">pão francês especial crocante</strong> ou brioche amanteigado, e a verdadeira tradição da pizza forneada em Capão Bonito.
+            </p>
+
+            {/* Fast Highlights Badges */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full max-w-xl pt-1">
+              <div className="flex items-center gap-2.5 bg-[#1A1614] border border-white/10 p-3 rounded-xl">
+                <span className="text-xl">🥖</span>
+                <div className="text-left">
+                  <p className="text-[10px] uppercase tracking-wider text-[#A8A29E] font-bold">Destaque</p>
+                  <p className="text-xs font-bold text-[#FDFBF7]">No Pão Francês</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 bg-[#1A1614] border border-[#D97706]/30 p-3 rounded-xl">
+                <span className="text-xl">🔥</span>
+                <div className="text-left">
+                  <p className="text-[10px] uppercase tracking-wider text-[#D97706] font-bold">Toda Sexta</p>
+                  <p className="text-xs font-bold text-[#EAB308]">Rodízio às 19h</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 bg-[#1A1614] border border-white/10 p-3 rounded-xl col-span-2 sm:col-span-1">
+                <span className="text-xl">🍺</span>
+                <div className="text-left">
+                  <p className="text-[10px] uppercase tracking-wider text-[#A8A29E] font-bold">Zero Grau</p>
+                  <p className="text-xs font-bold text-[#FDFBF7]">Chopp Trincando</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Sophisticated Dark Action CTAs */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto pt-2">
+              <button
+                id="hero-cta-menu"
+                onClick={onExploreMenu}
+                className="inline-flex items-center justify-center gap-3 bg-[#D97706] hover:bg-[#E65100] text-black font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full shadow-xl transition-all duration-200 cursor-pointer active:scale-95"
+              >
+                <Utensils className="w-4 h-4 text-black" />
+                <span>Explorar Cardápio</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                id="hero-cta-reservation"
+                onClick={onOpenReservation}
+                className="inline-flex items-center justify-center gap-2.5 bg-[#1A1614] hover:bg-[#221C18] border border-[#D97706]/50 hover:border-[#D97706] text-[#EAB308] hover:text-[#FDFBF7] font-bold text-xs uppercase tracking-widest px-7 py-4 rounded-full shadow-md transition-all duration-200 cursor-pointer active:scale-95"
+              >
+                <Flame className="w-4 h-4 text-[#D97706]" />
+                <span>Reservar Mesa</span>
+              </button>
+            </div>
+
+            {/* Delivery Info */}
+            <div className="flex items-center gap-2 text-xs text-[#A8A29E] pt-1">
+              <ShieldCheck className="w-4 h-4 text-[#25D366]" />
+              <span>Entrega rápida em toda Capão Bonito (~35 min) ou retirada no balcão</span>
+            </div>
+          </div>
+
+          {/* Right Column: Visual Showcase (5 cols) */}
+          <div className="lg:col-span-5 relative">
+            <div className="relative mx-auto max-w-md lg:max-w-none">
+              
+              {/* Decorative Glow Behind Image */}
+              <div className="absolute -inset-2 rounded-3xl bg-[#D97706]/10 blur-xl pointer-events-none" />
+
+              {/* Main Image Container */}
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-[#1A1614] shadow-2xl shadow-black/80 group">
+                <img
+                  src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=85"
+                  alt="Hambúrguer artesanal The Brothers"
+                  className="w-full h-80 sm:h-96 object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+
+                {/* Gradient Shadow Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0D0B0A] via-[#0D0B0A]/40 to-transparent" />
+
+                {/* Floating Tag over Image */}
+                <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md border border-white/10 px-3.5 py-1.5 rounded-full flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#FDFBF7]">Capão Bonito • Desde {RESTAURANT_INFO.since}</span>
+                </div>
+
+                {/* Bottom Card Inside Image */}
+                <div className="absolute bottom-4 left-4 right-4 bg-[#1A1614]/95 backdrop-blur-md border border-white/10 p-4 rounded-xl">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-[10px] text-[#D97706] font-bold uppercase tracking-wider">Destaque da Casa</p>
+                      <h4 className="text-white font-bold text-sm sm:text-base font-serif-display">The Brothers Classic Burger</h4>
+                      <p className="text-[#A8A29E] text-xs mt-0.5">Blend 160g no pão francês crocante com bacon</p>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-xs text-[#A8A29E] line-through">R$ 38,90</span>
+                      <p className="text-lg font-bold text-[#EAB308]">R$ 33,90</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Second Mini Card: Fresh Pizza */}
+              <div className="hidden sm:flex absolute -bottom-5 -left-5 bg-[#1A1614] border border-white/10 p-3.5 rounded-xl shadow-2xl items-center gap-3 max-w-xs">
+                <img 
+                  src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=200&q=80" 
+                  alt="Pizza Forneada" 
+                  className="w-11 h-11 rounded-lg object-cover border border-white/10"
+                />
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#EAB308]">Pizzas Forneadas</span>
+                  <p className="text-xs font-bold text-[#FDFBF7]">Bordas Vulcão Recheadas</p>
+                  <span className="text-[10px] text-[#A8A29E]">Catupiry Original®</span>
+                </div>
+              </div>
+
+              {/* Floating Third Mini Card: Cold Beer */}
+              <div className="hidden sm:flex absolute -top-5 -right-3 bg-[#1A1614] border border-white/10 p-3 rounded-xl shadow-2xl items-center gap-2.5">
+                <div className="w-9 h-9 rounded-lg bg-[#221C18] border border-white/10 flex items-center justify-center text-lg">
+                  🍺
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-[#FDFBF7]">Chopp Artesanal</p>
+                  <span className="text-[10px] text-[#EAB308] font-semibold uppercase tracking-wider">Caneca Congelada</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
