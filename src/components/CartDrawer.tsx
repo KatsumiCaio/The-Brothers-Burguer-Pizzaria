@@ -285,8 +285,20 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       </div>
 
                       {/* Customizations summary tags */}
-                      {(item.options.breadType || item.options.meatDoneness || (item.options.pizzaCrust && item.options.pizzaCrust !== 'Borda Tradicional') || item.options.selectedExtras.length > 0 || item.options.notes) && (
+                      {(item.options.pizzaFlavors || item.options.breadType || item.options.meatDoneness || (item.options.pizzaCrust && item.options.pizzaCrust !== 'Borda Tradicional') || item.options.selectedExtras.length > 0 || item.options.notes) && (
                         <div className="bg-[#1A1614] p-2.5 rounded-xl border border-white/5 space-y-1 text-[11px] text-[#A8A29E]">
+                          {item.options.pizzaFlavors && item.options.pizzaFlavors.length > 0 && (
+                            <p>
+                              🍕 <strong className="text-[#FDFBF7]">
+                                {item.options.pizzaFlavors.length === 1 ? 'Sabor:' : 'Sabores:'}
+                              </strong>{' '}
+                              <span className="text-[#EAB308]">
+                                {item.options.pizzaFlavors.length === 1
+                                  ? item.options.pizzaFlavors[0].name
+                                  : item.options.pizzaFlavors.map((f) => `1/2 ${f.name}`).join(' + ')}
+                              </span>
+                            </p>
+                          )}
                           {item.options.breadType && (
                             <p>🥖 <strong className="text-[#FDFBF7]">Pão:</strong> {item.options.breadType}</p>
                           )}

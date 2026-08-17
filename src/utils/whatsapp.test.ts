@@ -68,6 +68,70 @@ describe('whatsapp utils', () => {
     expect(url).toContain('PIX');
   });
 
+  it('generates a valid WhatsApp Order URL with pizza customization', () => {
+    const mockPizzaItem: MenuItem = {
+      id: 'pizza-grande',
+      name: 'Pizza Grande dos Brothers (8 Fatias)',
+      category: 'pizzas',
+      price: 55.0,
+      description: 'Massa de longa fermentação',
+      image: '/assets/pizza.png',
+      allowsCrustChoice: true,
+    };
+
+    const mockCartItems: CartItem[] = [
+      {
+        cartItemId: 'pizza-item-456',
+        menuItem: mockPizzaItem,
+        quantity: 1,
+        unitPrice: 63.0,
+        totalPrice: 63.0,
+        options: {
+          pizzaSize: 'grande',
+          pizzaFlavors: [
+            {
+              id: 'frango-catupiry',
+              name: 'FRANGO C/ CATUPIRY',
+              category: 'salgada',
+              description: 'Molho, frango e catupiry',
+              priceGrande: 55.0,
+              priceBroto: 35.0,
+              image: '/pizza1.jpg',
+            },
+            {
+              id: 'calabresa-especial',
+              name: 'CALABRESA ESPECIAL',
+              category: 'salgada',
+              description: 'Calabresa e cebola',
+              priceGrande: 55.0,
+              priceBroto: 35.0,
+              image: '/pizza2.jpg',
+            },
+          ],
+          pizzaCrust: 'Borda Vulcão Catupiry Original (+R$ 8,00)',
+          selectedExtras: [],
+          notes: 'Bem dourada',
+        },
+      },
+    ];
+
+    const mockOrderForm: OrderForm = {
+      customerName: 'Juliana Mendes',
+      customerPhone: '(15) 99765-4321',
+      orderType: 'retirada',
+      paymentMethod: 'cartao_entrega',
+      needChange: false,
+      changeFor: '',
+      generalNotes: '',
+    };
+
+    const url = generateWhatsAppOrderUrl(mockCartItems, mockOrderForm, 63.0, 0, 63.0);
+    expect(url).toContain(`https://wa.me/${RESTAURANT_INFO.whatsappNumber}`);
+    expect(url).toContain('Juliana%20Mendes');
+    expect(url).toContain('1%2F2%20FRANGO%20C%2F%20CATUPIRY%20%2B%201%2F2%20CALABRESA%20ESPECIAL');
+    expect(url).toContain('Borda%20Vulc%C3%A3o%20Catupiry');
+  });
+
   it('generates a valid WhatsApp Reservation URL for Friday Rodizio', () => {
     const url = generateWhatsAppReservationUrl('Mariana Costa', 6, 'Próxima Sexta', '19:30', true);
 

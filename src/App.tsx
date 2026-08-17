@@ -12,6 +12,7 @@ import { Hero } from './components/Hero';
 import { PillarsSection } from './components/PillarsSection';
 import { InteractiveMenu } from './components/InteractiveMenu';
 import { ProductModal } from './components/ProductModal';
+import { PizzaModal } from './components/PizzaModal';
 import { CartDrawer } from './components/CartDrawer';
 import { FridayRodizioSection } from './components/FridayRodizioSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
@@ -23,6 +24,7 @@ import { ToastContainer, ToastMessage } from './components/Toast';
 import { LegalModal } from './components/LegalModal';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { telemetry } from './utils/telemetry';
+import { PizzaSize } from './types';
 
 export default function App() {
   // Navigation & Category state
@@ -35,6 +37,14 @@ export default function App() {
   // Modals state
   const [selectedProduct, setSelectedProduct] = useState<MenuItem | null>(null);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [pizzaModalState, setPizzaModalState] = useState<{
+    isOpen: boolean;
+    size?: PizzaSize;
+    flavorId?: string;
+  }>({
+    isOpen: false,
+    size: 'grande',
+  });
   const [isReservationOpen, setIsReservationOpen] = useState(false);
   const [legalModalState, setLegalModalState] = useState<{ isOpen: boolean; tab: 'terms' | 'privacy' }>({
     isOpen: false,
@@ -220,6 +230,13 @@ export default function App() {
             activeCategory={activeCategory}
             onSelectCategory={(cat) => setActiveCategory(cat)}
             onOpenProductModal={handleOpenProductModal}
+            onOpenPizzaModal={(size, flavorId) =>
+              setPizzaModalState({
+                isOpen: true,
+                size: size || 'grande',
+                flavorId,
+              })
+            }
             onDirectAdd={handleDirectAdd}
             cartItemIds={cartItemIds}
           />
@@ -253,6 +270,21 @@ export default function App() {
                 setIsProductModalOpen(false);
                 setSelectedProduct(null);
               }}
+              onAddToCart={handleAddToCart}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Dedicated Pizza Customizer Modal */}
+        <AnimatePresence>
+          {pizzaModalState.isOpen && (
+            <PizzaModal
+              isOpen={pizzaModalState.isOpen}
+              initialSize={pizzaModalState.size}
+              initialFlavorId={pizzaModalState.flavorId}
+              onClose={() =>
+                setPizzaModalState((prev) => ({ ...prev, isOpen: false }))
+              }
               onAddToCart={handleAddToCart}
             />
           )}

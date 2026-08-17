@@ -30,9 +30,23 @@ export interface MenuItem {
   spicy?: boolean;
 }
 
+export interface PizzaFlavor {
+  id: string;
+  name: string;
+  description: string;
+  priceGrande: number;
+  priceBroto: number;
+  image: string;
+  category?: 'salgada' | 'doce' | 'especial';
+}
+
+export type PizzaSize = 'grande' | 'broto';
+
 export interface CartItemOption {
   breadType?: 'Pão Brioche Selado na Manteiga' | 'Pão Francês Especial Crocante';
   meatDoneness?: 'Ao Ponto (Suculento)' | 'Bem Passado' | 'Ao Ponto para Mal Passado';
+  pizzaSize?: PizzaSize;
+  pizzaFlavors?: PizzaFlavor[];
   pizzaCrust?: 'Borda Tradicional' | 'Borda Vulcão Catupiry Original (+R$ 8,00)' | 'Borda Vulcão Cheddar (+R$ 8,00)';
   selectedExtras: ExtraOption[];
   notes?: string;

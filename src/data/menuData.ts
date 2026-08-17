@@ -1,4 +1,4 @@
-import { MenuItem, CustomerReview } from '../types';
+import { MenuItem, CustomerReview, PizzaFlavor } from '../types';
 
 export const RESTAURANT_INFO = {
   name: "The Brothers Burguer e Pizzaria",
@@ -34,6 +34,243 @@ export const PIZZA_EXTRAS = [
   { id: 'extra-catupiry-crust', name: 'Borda Vulcão Catupiry Original', price: 8.00 },
   { id: 'extra-cheddar-crust', name: 'Borda Vulcão Cheddar Cremoso', price: 8.00 },
   { id: 'extra-bacon-bits', name: 'Bacon em Cubos Salpicado', price: 6.00 }
+];
+
+export const PIZZA_FLAVORS: PizzaFlavor[] = [
+  {
+    id: 'sabor-moda-da-casa',
+    name: 'MODA DA CASA',
+    description: 'molho de tomate, ervilhas, ovo cozido, cebola, presunto, catupiry, mussarela e azeitonas.',
+    priceGrande: 75.00,
+    priceBroto: 55.00,
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80',
+    category: 'especial'
+  },
+  {
+    id: 'sabor-nutella-morango',
+    name: 'PIZZA DOCE (NUTELLA COM MORANGO)',
+    description: 'nutella original com morangos frescos e granulado de chocolate nobre.',
+    priceGrande: 75.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80',
+    category: 'doce'
+  },
+  {
+    id: 'sabor-banana-doce-de-leite',
+    name: 'PIZZA DOCE (BANANA COM DOCE DE LEITE E CANELA)',
+    description: 'banana fatiada, doce de leite cremoso e canela em pó.',
+    priceGrande: 75.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=600&q=80',
+    category: 'doce'
+  },
+  {
+    id: 'sabor-marguerita',
+    name: 'MARGUERITA',
+    description: 'molho de tomate, mussarela, rodelas de tomate, manjericão e azeitona.',
+    priceGrande: 65.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-alho',
+    name: 'ALHO',
+    description: 'molho de tomate, mussarela, alho frito dourado e azeitona.',
+    priceGrande: 60.00,
+    priceBroto: 40.00,
+    image: 'https://images.unsplash.com/photo-1573821663912-569905455b1c?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-palmito',
+    name: 'PALMITO',
+    description: 'molho de tomate, palmito, mussarela, tomate e azeitonas.',
+    priceGrande: 60.00,
+    priceBroto: 40.00,
+    image: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-brocolis',
+    name: 'BRÓCOLIS',
+    description: 'molho de tomate, brócolis, mussarela, catupiri e azeitonas.',
+    priceGrande: 60.00,
+    priceBroto: 40.00,
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-brocolis-bacon',
+    name: 'BRÓCOLIS COM BACON',
+    description: 'molho de tomate, brócolis, mussarela, fatias de bacon e azeitonas.',
+    priceGrande: 70.00,
+    priceBroto: 50.00,
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-americana',
+    name: 'AMERICANA',
+    description: 'molho de tomate, bacon, milho, mussarela e azeitonas.',
+    priceGrande: 65.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-calabacon',
+    name: 'CALABACON',
+    description: 'molho de tomate, mussarela, calabresa fatiada, bacon e azeitonas.',
+    priceGrande: 65.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-frangomito',
+    name: 'FRANGOMITO',
+    description: 'molho de tomate, frango desfiado, palmito, mussarela e azeitona.',
+    priceGrande: 65.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-frango-4-queijos',
+    name: 'FRANGO AOS 4 QUEIJOS',
+    description: 'molho de tomate, frango desfiado, catupiri, provolone, gorgonzola, mussarela e azeitonas.',
+    priceGrande: 85.00,
+    priceBroto: 55.00,
+    image: 'https://images.unsplash.com/photo-1573821663912-569905455b1c?auto=format&fit=crop&w=600&q=80',
+    category: 'especial'
+  },
+  {
+    id: 'sabor-napolitana',
+    name: 'NAPOLITANA',
+    description: 'molho de tomate, mussarela, presunto, rodelas de tomate, parmesão e azeitonas.',
+    priceGrande: 62.00,
+    priceBroto: 42.00,
+    image: 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-mista',
+    name: 'MISTA',
+    description: 'molho de tomate, mussarela, presunto e azeitonas.',
+    priceGrande: 60.00,
+    priceBroto: 40.00,
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-vegetariana',
+    name: 'VEGETARIANA',
+    description: 'molho de tomate, mussarela, champignon, palmito e azeitonas.',
+    priceGrande: 65.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-baiana',
+    name: 'BAIANA',
+    description: 'molho de tomate, calabresa fatiada, molho de pimenta, mussarela, pimenta biquinho e azeitonas.',
+    priceGrande: 70.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-calabresa-acebolada',
+    name: 'CALABRESA ACEBOLADA',
+    description: 'molho de tomate, calabresa fatiada, cebola e azeitonas.',
+    priceGrande: 55.00,
+    priceBroto: 35.00,
+    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-mussarela',
+    name: 'MUSSARELA',
+    description: 'molho de tomate, mussarela, tomate e azeitonas.',
+    priceGrande: 55.00,
+    priceBroto: 35.00,
+    image: 'https://images.unsplash.com/photo-1573821663912-569905455b1c?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-dois-queijos',
+    name: 'DOIS QUEIJOS',
+    description: 'molho de tomate, mussarela, catupiry e azeitonas.',
+    priceGrande: 65.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1573821663912-569905455b1c?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-quatro-queijos',
+    name: 'QUATRO QUEIJOS',
+    description: 'molho de tomate, mussarela, catupiry, provolone, gorgonzola e azeitonas.',
+    priceGrande: 75.00,
+    priceBroto: 50.00,
+    image: 'https://images.unsplash.com/photo-1573821663912-569905455b1c?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-calamussa',
+    name: 'CALAMUSSA',
+    description: 'molho de tomate, calabresa fatiada, cebola, mussarela e azeitonas.',
+    priceGrande: 65.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-caipira',
+    name: 'CAIPIRA',
+    description: 'molho de tomate, frango desfiado, milho verde, mussarela e azeitonas.',
+    priceGrande: 65.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-frango-catupiry',
+    name: 'FRANGO CATUPIRY',
+    description: 'molho de tomate, frango desfiado, catupiry, mussarela e azeitonas.',
+    priceGrande: 75.00,
+    priceBroto: 50.00,
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-portuguesa',
+    name: 'PORTUGUESA',
+    description: 'molho de tomate, ervilhas, ovo cozido, cebola, presunto, mussarela e azeitonas.',
+    priceGrande: 65.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-atum',
+    name: 'ATUM',
+    description: 'molho de tomate, atum, cebola, mussarela e azeitonas.',
+    priceGrande: 65.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1573821663912-569905455b1c?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  },
+  {
+    id: 'sabor-bacon',
+    name: 'BACON',
+    description: 'molho de tomate, bacon fatiado, cebola, mussarela e azeitonas.',
+    priceGrande: 65.00,
+    priceBroto: 45.00,
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80',
+    category: 'salgada'
+  }
 ];
 
 export const MENU_ITEMS: MenuItem[] = [

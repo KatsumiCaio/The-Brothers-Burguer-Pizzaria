@@ -47,6 +47,16 @@ export const generateWhatsAppOrderUrl = (
   cartItems.forEach((item, index) => {
     lines.push(`*${index + 1}. ${item.quantity}x ${item.menuItem.name}* (${formatCurrency(item.totalPrice)})`);
     
+    if (item.options.pizzaFlavors && item.options.pizzaFlavors.length > 0) {
+      if (item.options.pizzaFlavors.length === 1) {
+        lines.push(`   🍕 Sabor: _${item.options.pizzaFlavors[0].name}_`);
+      } else {
+        const flavorsText = item.options.pizzaFlavors
+          .map((f, i) => `1/2 ${f.name}`)
+          .join(' + ');
+        lines.push(`   🍕 Sabores: _${flavorsText}_`);
+      }
+    }
     if (item.options.breadType) {
       lines.push(`   🥪 Pão: _${item.options.breadType}_`);
     }
