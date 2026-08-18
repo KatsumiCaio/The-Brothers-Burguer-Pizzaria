@@ -229,35 +229,39 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
 
         {/* Category Filter Tabs */}
         {!searchQuery && (
-          <div className="flex items-center gap-2.5 overflow-x-auto pb-4 pt-2 no-scrollbar justify-start sm:justify-center mb-10">
-            {CATEGORIES_CONFIG.map((cat) => {
-              const isSelected = activeCategory === cat.id;
-              return (
-                <motion.button
-                  key={cat.id}
-                  onClick={() => handleCategorySwitch(cat.id)}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.96 }}
-                  className={`relative flex items-center gap-2 px-4 py-2.5 min-h-[44px] rounded-xl text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-colors duration-200 cursor-pointer border ${
-                    isSelected
-                      ? 'border-[#E27D60] text-white shadow-lg shadow-[#E27D60]/20'
-                      : 'bg-[#201B18] text-[#C4B8B0] hover:text-[#F8D8C8] border-white/10 hover:border-[#E27D60]/30'
-                  }`}
-                >
-                  {isSelected && (
-                    <motion.div
-                      layoutId="activeCategoryPill"
-                      className="absolute inset-0 bg-gradient-to-r from-[#E27D60] to-[#D96B43] rounded-xl -z-10"
-                      transition={{ type: 'spring', stiffness: 450, damping: 32 }}
-                    />
-                  )}
-                  <span className="relative z-10 flex items-center gap-2">
-                    {renderCategoryIcon(cat.icon, isSelected)}
-                    <span>{cat.label}</span>
-                  </span>
-                </motion.button>
-              );
-            })}
+          <div className="relative mb-10 w-full">
+            <div className="w-full overflow-x-auto pb-4 pt-2 no-scrollbar">
+              <div className="flex items-center gap-2.5 w-max min-w-full justify-start xl:justify-center px-1 sm:px-2">
+                {CATEGORIES_CONFIG.map((cat) => {
+                  const isSelected = activeCategory === cat.id;
+                  return (
+                    <motion.button
+                      key={cat.id}
+                      onClick={() => handleCategorySwitch(cat.id)}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.96 }}
+                      className={`relative flex items-center gap-2 px-4 py-2.5 min-h-[44px] rounded-xl text-xs font-bold uppercase tracking-widest whitespace-nowrap transition-colors duration-200 cursor-pointer border flex-shrink-0 ${
+                        isSelected
+                          ? 'border-[#E27D60] text-white shadow-lg shadow-[#E27D60]/20'
+                          : 'bg-[#201B18] text-[#C4B8B0] hover:text-[#F8D8C8] border-white/10 hover:border-[#E27D60]/30'
+                      }`}
+                    >
+                      {isSelected && (
+                        <motion.div
+                          layoutId="activeCategoryPill"
+                          className="absolute inset-0 bg-gradient-to-r from-[#E27D60] to-[#D96B43] rounded-xl -z-10"
+                          transition={{ type: 'spring', stiffness: 450, damping: 32 }}
+                        />
+                      )}
+                      <span className="relative z-10 flex items-center gap-2">
+                        {renderCategoryIcon(cat.icon, isSelected)}
+                        <span>{cat.label}</span>
+                      </span>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         )}
 
@@ -436,25 +440,27 @@ export const InteractiveMenu: React.FC<InteractiveMenuProps> = ({
                 </div>
 
                 {/* Flavor filter tabs */}
-                <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
-                  {[
-                    { id: 'todos', label: 'Todos os Sabores' },
-                    { id: 'salgadas', label: 'Salgadas' },
-                    { id: 'especiais', label: 'Especiais do Chef' },
-                    { id: 'doces', label: 'Doces' },
-                  ].map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => setPizzaFlavorFilter(tab.id as any)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer whitespace-nowrap border ${
-                        pizzaFlavorFilter === tab.id
-                          ? 'bg-[#E27D60]/20 border-[#E27D60] text-[#F8D8C8]'
-                          : 'bg-[#201B18] border-white/10 text-[#C4B8B0] hover:text-[#FFF8F3]'
-                      }`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
+                <div className="w-full sm:w-auto overflow-x-auto pb-1 no-scrollbar">
+                  <div className="flex items-center gap-2 w-max">
+                    {[
+                      { id: 'todos', label: 'Todos os Sabores' },
+                      { id: 'salgadas', label: 'Salgadas' },
+                      { id: 'especiais', label: 'Especiais do Chef' },
+                      { id: 'doces', label: 'Doces' },
+                    ].map((tab) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => setPizzaFlavorFilter(tab.id as any)}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer whitespace-nowrap border flex-shrink-0 min-h-[36px] ${
+                          pizzaFlavorFilter === tab.id
+                            ? 'bg-[#E27D60]/20 border-[#E27D60] text-[#F8D8C8]'
+                            : 'bg-[#201B18] border-white/10 text-[#C4B8B0] hover:text-[#FFF8F3]'
+                        }`}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 

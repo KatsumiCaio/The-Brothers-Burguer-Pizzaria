@@ -47,10 +47,10 @@ export const FloatingWhatsApp: React.FC = () => {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1EBE5D] text-black flex items-center justify-center shadow-2xl transition-colors duration-300 border-2 border-white/20 group cursor-pointer"
+        className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] hover:bg-[#1EBE5D] text-black flex items-center justify-center shadow-2xl transition-colors duration-300 border-2 border-white/20 group cursor-pointer"
         aria-label="Chamar no WhatsApp"
       >
-        <span className="text-2xl transition-transform group-hover:scale-110">💬</span>
+        <span className="text-xl sm:text-2xl transition-transform group-hover:scale-110">💬</span>
       </motion.a>
     </div>
   );

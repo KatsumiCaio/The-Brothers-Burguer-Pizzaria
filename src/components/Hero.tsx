@@ -150,20 +150,20 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onOpenReservation }) 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#12100E] via-[#12100E]/40 to-transparent" />
 
                 {/* Floating Tag over Image */}
-                <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md border border-white/10 px-3.5 py-1.5 rounded-full flex items-center gap-2">
+                <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md border border-white/10 px-3.5 py-1.5 rounded-full flex items-center gap-2 z-10">
                   <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFF8F3]">Capão Bonito • Desde {RESTAURANT_INFO.since}</span>
                 </div>
 
-                {/* Bottom Card Inside Image */}
-                <div className="absolute bottom-4 left-4 right-4 bg-[#201B18]/95 backdrop-blur-md border border-white/10 p-4 rounded-xl">
-                  <div className="flex items-center justify-between">
-                    <div>
+                {/* Bottom Card Inside Image (Hero Highlight) */}
+                <div className="absolute bottom-4 left-4 right-4 bg-[#201B18]/95 backdrop-blur-md border border-white/10 p-4 rounded-xl z-10 shadow-lg">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0 flex-1">
                       <p className="text-[10px] text-[#E27D60] font-bold uppercase tracking-wider">Destaque da Casa</p>
-                      <h4 className="text-white font-bold text-sm sm:text-base font-serif-display">The Brothers Classic Burger</h4>
-                      <p className="text-[#C4B8B0] text-xs mt-0.5">Blend 160g no pão francês crocante com bacon</p>
+                      <h4 className="text-white font-bold text-sm sm:text-base font-serif-display truncate sm:whitespace-normal">The Brothers Classic Burger</h4>
+                      <p className="text-[#C4B8B0] text-xs mt-0.5 line-clamp-1 sm:line-clamp-none">Blend 160g no pão francês crocante com bacon</p>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right flex-shrink-0">
                       <span className="text-xs text-[#C4B8B0] line-through">R$ 38,90</span>
                       <p className="text-lg font-bold text-[#E27D60]">R$ 33,90</p>
                     </div>
@@ -171,21 +171,21 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onOpenReservation }) 
                 </div>
               </div>
 
-              {/* Floating Second Mini Card: Fresh Pizza */}
+              {/* Floating Second Mini Card: Fresh Pizza (Repositioned to upper-left so it never overlaps the burger card text) */}
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="hidden sm:flex absolute -bottom-5 -left-5 bg-[#201B18] border border-white/10 p-3.5 rounded-xl shadow-2xl items-center gap-3 max-w-xs"
+                className="hidden sm:flex absolute top-20 -left-6 lg:-left-8 bg-[#201B18]/95 backdrop-blur-md border border-white/15 p-3 rounded-xl shadow-2xl items-center gap-3 max-w-xs z-20 hover:scale-105 transition-transform"
               >
                 <img 
                   src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=200&q=80" 
                   alt="Pizza Forneada" 
-                  className="w-11 h-11 rounded-lg object-cover border border-white/10"
+                  className="w-10 h-10 rounded-lg object-cover border border-white/10 flex-shrink-0"
                 />
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[#F8D8C8]">Pizzas Forneadas</span>
-                  <p className="text-xs font-bold text-[#FFF8F3]">Bordas Vulcão Recheadas</p>
+                  <p className="text-xs font-bold text-[#FFF8F3] leading-tight">Bordas Vulcão</p>
                   <span className="text-[10px] text-[#C4B8B0]">Catupiry Original®</span>
                 </div>
               </motion.div>
@@ -195,7 +195,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreMenu, onOpenReservation }) 
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="hidden sm:flex absolute -top-5 -right-3 bg-[#201B18] border border-white/10 p-3 rounded-xl shadow-2xl items-center gap-2.5"
+                className="hidden sm:flex absolute -top-5 -right-3 bg-[#201B18]/95 backdrop-blur-md border border-white/15 p-3 rounded-xl shadow-2xl items-center gap-2.5 z-20 hover:scale-105 transition-transform"
               >
                 <div className="w-9 h-9 rounded-lg bg-[#2A231E] border border-white/10 flex items-center justify-center text-lg">
                   🍺
